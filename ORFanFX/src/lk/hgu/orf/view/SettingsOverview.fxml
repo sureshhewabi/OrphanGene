@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import com.jfoenix.controls.JFXSlider?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.hgu.orf.view.MainFormController">
+   <children>
+      <BorderPane layoutX="205.0" layoutY="152.0" prefHeight="333.0" prefWidth="479.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <VBox fx:id="dataPane" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <TabPane prefHeight="200.0" prefWidth="200.0" side="RIGHT" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+                     <tabs>
+                        <Tab text="Overview">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <BorderPane layoutX="91.0" layoutY="82.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="60.0">
+                                       <top>
+                                          <GridPane prefHeight="242.0" prefWidth="906.0" BorderPane.alignment="CENTER">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="472.0" minWidth="10.0" prefWidth="147.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="660.0" minWidth="10.0" prefWidth="554.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="660.0" minWidth="10.0" prefWidth="63.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="660.0" minWidth="10.0" prefWidth="259.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Label text="Database File" />
+                                                <JFXButton fx:id="btnDatabaseUpload" buttonType="RAISED" style="-fx-background-color: #009688;" text="Upload" textFill="WHITE" GridPane.columnIndex="3" />
+                                                <JFXTextField focusColor="#26a69a" maxWidth="644.0" minWidth="526.0" prefHeight="33.0" prefWidth="526.0" GridPane.columnIndex="1" />
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Taxonomy File" GridPane.rowIndex="2" />
+                                                <Label text="Species File" GridPane.rowIndex="4" />
+                                                <Label text="Number of Threads" GridPane.rowIndex="6" />
+                                                <JFXButton fx:id="btnTaxonomyUpload" buttonType="RAISED" style="-fx-background-color: #009688;" text="Upload" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                                <JFXTextField focusColor="#26a69a" maxWidth="644.0" minWidth="526.0" prefHeight="33.0" prefWidth="526.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <JFXButton fx:id="btnSpeciesUpload" buttonType="RAISED" style="-fx-background-color: #009688;" text="Upload" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                                <JFXTextField focusColor="#26a69a" maxWidth="644.0" minWidth="526.0" prefHeight="33.0" prefWidth="526.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <JFXSlider fx:id="sliderThreads" blockIncrement="1.0" majorTickUnit="1.0" max="8.0" min="3.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" value="5.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                                   <GridPane.margin>
+                                                      <Insets left="10.0" top="35.0" />
+                                                   </GridPane.margin>
+                                                </JFXSlider>
+                                             </children>
+                                          </GridPane>
+                                       </top>
+                                       <bottom>
+                                          <HBox prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                             <children>
+                                                <JFXButton fx:id="btnMainForm" buttonType="RAISED" style="-fx-background-color: #009688;" text="Main Page" />
+                                             </children>
+                                          </HBox>
+                                       </bottom>
+                                    </BorderPane>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+                        <Tab text="Database">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          </content>
+                        </Tab>
+                        <Tab text="Taxonomy">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          </content>
+                        </Tab>
+                        <Tab text="Species">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          </content>
+                        </Tab>
+                     </tabs>
+                  </TabPane>
+               </children>
+            </VBox>
+         </center>
+         <top>
+            <BorderPane style="-fx-background-color: #009688;" BorderPane.alignment="CENTER">
+               <left>
+                  <JFXHamburger fx:id="hamburgerSideMenu" prefHeight="50.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+               </left>
+               <center>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="ORFan Gene Finder" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                  </Text>
+               </center>
+               <effect>
+                  <DropShadow />
+               </effect>
+               <right>
+                  <JFXButton buttonType="RAISED" text="X" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="Verdana" size="27.0" />
+                     </font>
+                  </JFXButton>
+               </right>
+            </BorderPane>
+         </top>
+      </BorderPane>
+   </children>
+</AnchorPane>

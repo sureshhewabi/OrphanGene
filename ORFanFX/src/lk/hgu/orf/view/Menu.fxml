@@ -1,47 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fillWidth="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="329.0" prefWidth="196.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.hgu.orf.view.MenuController">
+<VBox fillWidth="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="2000.0" prefWidth="190.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.hgu.orf.view.MenuController">
    <children>
-      <ImageView fx:id="imageSideMenu" fitHeight="113.0" fitWidth="204.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/ManuImageMat.jpg" />
-         </image>
-      </ImageView>
-      <JFXButton fx:id="menuSettings" buttonType="RAISED" defaultButton="true" onAction="#menuSettings_action" prefHeight="37.0" prefWidth="204.0" ripplerFill="WHITE" style="-fx-background-color: #26a69a;" text="Overall Settings" textFill="WHITE">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </JFXButton>
-      <JFXButton buttonType="RAISED" defaultButton="true" prefHeight="37.0" prefWidth="203.0" ripplerFill="WHITE" style="-fx-background-color: #26a69a;" text="TEST" textFill="WHITE">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </JFXButton>
-      <JFXButton buttonType="RAISED" defaultButton="true" prefHeight="37.0" prefWidth="204.0" ripplerFill="WHITE" style="-fx-background-color: #26a69a;" text="TEST" textFill="WHITE">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </JFXButton>
-      <JFXButton buttonType="RAISED" defaultButton="true" prefHeight="37.0" prefWidth="205.0" ripplerFill="WHITE" style="-fx-background-color: #26a69a;" text="TEST" textFill="WHITE">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </JFXButton>
-      <JFXButton buttonType="RAISED" defaultButton="true" prefHeight="37.0" prefWidth="203.0" ripplerFill="WHITE" style="-fx-background-color: #26a69a;" text="TEST" textFill="WHITE">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </JFXButton>
-      <JFXButton buttonType="RAISED" defaultButton="true" prefHeight="36.0" prefWidth="204.0" ripplerFill="WHITE" style="-fx-background-color: #26a69a;" text="TEST" textFill="WHITE">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </JFXButton>
+      <AnchorPane>
+         <children>
+            <ImageView fx:id="imageSideMenu" fitHeight="113.0" fitWidth="204.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <image>
+                  <Image url="@../images/ManuImageMat.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <Accordion maxWidth="-Infinity" prefHeight="2000.0" prefWidth="217.0">
+         <panes>
+            <TitledPane animated="false" text="About">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               </content>
+            </TitledPane>
+            <TitledPane animated="false" text="Settings">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="btnSettingsOverview" mnemonicParsing="false" onAction="#btnSettingsOverview_clicked" text="Overview" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Button fx:id="openFrm3" layoutX="40.0" layoutY="36.0" mnemonicParsing="false" onAction="#loadPane3" text="Database" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="35.0" />
+                        <JFXButton fx:id="btnSettings" buttonType="RAISED" layoutX="70.0" layoutY="99.0" onAction="#btnSettings_clicked" style="-fx-background-color: #009688;" text="click me" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </TitledPane>
+            <TitledPane animated="false" prefHeight="716.0" prefWidth="201.0" text="Help">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               </content>
+            </TitledPane>
+         </panes>
+      </Accordion>
    </children>
 </VBox>

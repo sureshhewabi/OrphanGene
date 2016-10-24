@@ -39,6 +39,9 @@ public class MainFormController implements Initializable {
     private JFXDrawer drawer;
 
     @FXML
+    public static VBox dataPane;
+
+    @FXML
     private TableView<?> tblOverview;
 
     @FXML
@@ -99,18 +102,17 @@ public class MainFormController implements Initializable {
                     drawer.open();
                 }
             });
+            
+            createOverViewChart();
+            createBlastChart();
 
         } catch (Exception e) {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Exception Found");
             alert.setHeaderText("ERROR");
             alert.setContentText(e.getMessage());
-
             alert.showAndWait();
         }
-
-        createOverViewChart();
-        createBlastChart();
     }
 
     protected BarChart<String, Number> createOverViewChart() {
@@ -163,5 +165,4 @@ public class MainFormController implements Initializable {
         chartBlastHit.getData().add(series2);
         return chartBlastHit;
     }
-
 }
