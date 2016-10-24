@@ -1,4 +1,4 @@
-package orfanfx;
+package lk.hgu.orf.view;
 
 import com.jfoenix.controls.JFXDrawer;
 
@@ -25,7 +25,7 @@ import javafx.scene.layout.Pane;
 
 /**
  *
- * @author hgu
+ * @author Suresh Hewapathirana
  */
 public class MainFormController implements Initializable {
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package orfanfx;
+package lk.hgu.orf.view;
 
 import com.jfoenix.controls.JFXButton;
 import java.io.IOException;

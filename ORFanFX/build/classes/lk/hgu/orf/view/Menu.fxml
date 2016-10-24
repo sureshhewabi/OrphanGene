@@ -6,11 +6,11 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fillWidth="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="329.0" prefWidth="196.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="orfanfx.MenuController">
+<VBox fillWidth="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="329.0" prefWidth="196.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.hgu.orf.view.MenuController">
    <children>
       <ImageView fx:id="imageSideMenu" fitHeight="113.0" fitWidth="204.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../lk/hgu/orf/images/ManuImageMat.jpg" />
+            <Image url="@../images/ManuImageMat.jpg" />
          </image>
       </ImageView>
       <JFXButton fx:id="menuSettings" buttonType="RAISED" defaultButton="true" onAction="#menuSettings_action" prefHeight="37.0" prefWidth="204.0" ripplerFill="WHITE" style="-fx-background-color: #26a69a;" text="Overall Settings" textFill="WHITE">
