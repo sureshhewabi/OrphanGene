@@ -27,7 +27,7 @@ import javafx.scene.layout.Pane;
  *
  * @author hgu
  */
-public class FXMLDocumentController implements Initializable {
+public class MainFormController implements Initializable {
 
     @FXML
     private Pane paneHeader;
