@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="621.0" prefWidth="828.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="orfanfx.FXMLDocumentController">
+   <children>
+      <BorderPane layoutX="205.0" layoutY="152.0" prefHeight="333.0" prefWidth="479.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <Pane fx:id="paneHeader" prefHeight="71.0" prefWidth="704.0" style="-fx-background-color: #009688;" BorderPane.alignment="CENTER">
+               <children>
+                  <JFXHamburger fx:id="hamburgerSideMenu" layoutX="14.0" layoutY="26.0" />
+                  <Text fill="WHITE" layoutX="75.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ORFan Gene Finder">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                  </Text>
+               </children>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Pane>
+         </top>
+         <left>
+            <JFXDrawer fx:id="drawer" defaultDrawerSize="190.0" prefHeight="550.0" prefWidth="0.0" BorderPane.alignment="TOP_LEFT" />
+         </left>
+         <center>
+            <TabPane prefHeight="200.0" prefWidth="200.0" side="RIGHT" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER_LEFT">
+              <tabs>
+                <Tab text="Input">
+                     <content>
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <JFXTextArea fx:id="txtProteinSequence" focusColor="#26a69a" labelFloat="true" promptText="Protein Sequence " style="-fx-border-color: #555555;">
+                                 <GridPane.margin>
+                                    <Insets bottom="10.0" left="20.0" right="20.0" top="40.0" />
+                                 </GridPane.margin>
+                                 <effect>
+                                    <Glow level="0.25" />
+                                 </effect>
+                              </JFXTextArea>
+                              <FlowPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                 <children>
+                                    <BorderPane prefHeight="70.0" prefWidth="793.0">
+                                       <top>
+                                          <GridPane BorderPane.alignment="CENTER">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Hyperlink text="Show an Example" GridPane.rowIndex="1">
+                                                   <GridPane.margin>
+                                                      <Insets left="20.0" top="50.0" />
+                                                   </GridPane.margin>
+                                                </Hyperlink>
+                                                <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                   <right>
+                                                      <JFXButton fx:id="btnFindOrphanGenes" buttonType="RAISED" style="-fx-background-color: #4db6ac;" text="Find Orphan Genes" textFill="WHITE" BorderPane.alignment="CENTER">
+                                                         <BorderPane.margin>
+                                                            <Insets right="30.0" top="50.0" />
+                                                         </BorderPane.margin>
+                                                      </JFXButton>
+                                                   </right>
+                                                </BorderPane>
+                                                <JFXTextField focusColor="#26a69a" labelFloat="true" maxWidth="370.0" minWidth="370.0" prefHeight="33.0" prefWidth="370.0" promptText="Organism">
+                                                   <GridPane.margin>
+                                                      <Insets left="20.0" top="20.0" />
+                                                   </GridPane.margin>
+                                                </JFXTextField>
+                                                <JFXComboBox prefHeight="27.0" prefWidth="365.0" promptText="Database" GridPane.columnIndex="1">
+                                                   <GridPane.margin>
+                                                      <Insets left="20.0" right="20.0" top="20.0" />
+                                                   </GridPane.margin>
+                                                </JFXComboBox>
+                                             </children>
+                                          </GridPane>
+                                       </top>
+                                       <padding>
+                                          <Insets top="20.0" />
+                                       </padding>
+                                    </BorderPane>
+                                 </children>
+                              </FlowPane>
+                           </children>
+                        </GridPane>
+                     </content>
+                </Tab>
+                <Tab text="Result Overview">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <GridPane hgap="10.0" layoutX="119.0" layoutY="167.0" prefHeight="182.0" prefWidth="226.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <GridPane>
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <TableView fx:id="tblOverview" prefHeight="200.0" prefWidth="200.0">
+                                            <columns>
+                                              <TableColumn prefWidth="150.0" text="Taxomony Level" />
+                                              <TableColumn prefWidth="200.0" text="Number of Orphan Genes" />
+                                            </columns>
+                                             <GridPane.margin>
+                                                <Insets top="10.0" />
+                                             </GridPane.margin>
+                                          </TableView>
+                                          <BarChart fx:id="chartOverview" title="Orphan Genes Overview" GridPane.columnIndex="1">
+                                            <xAxis>
+                                              <CategoryAxis label="Taxonomy Level" side="BOTTOM" fx:id="xAxisOverview" />
+                                            </xAxis>
+                                            <yAxis>
+                                              <NumberAxis fx:id="yAxisOverview" label="Number of Orphan Genes" minorTickCount="1" side="LEFT" />
+                                            </yAxis>
+                                             <GridPane.margin>
+                                                <Insets top="10.0" />
+                                             </GridPane.margin>
+                                          </BarChart>
+                                       </children>
+                                    </GridPane>
+                                    <TableView fx:id="tblOrphanGenes" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                      <columns>
+                                        <TableColumn fx:id="colGeneId" prefWidth="200.0" text="Gene ID" />
+                                        <TableColumn fx:id="colGeneName" prefWidth="150.0" text="Gene Name" />
+                                          <TableColumn fx:id="colORFGeneLevel" prefWidth="250.0" text="ORF Gene Level" />
+                                          <TableColumn fx:id="colTaxanomyLevel" prefWidth="200.0" text="Taxanomy Level" />
+                                      </columns>
+                                       <GridPane.margin>
+                                          <Insets top="10.0" />
+                                       </GridPane.margin>
+                                    </TableView>
+                                 </children>
+                                 <padding>
+                                    <Insets top="10.0" />
+                                 </padding>
+                              </GridPane>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                  <Tab text="Result Details">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <GridPane layoutX="237.0" layoutY="170.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <BarChart fx:id="chartBlastHit" title="BLAST Hit Details">
+                                      <xAxis>
+                                        <CategoryAxis label="Taxomony Levels" side="BOTTOM" fx:id="xAxisBlast" />
+                                      </xAxis>
+                                      <yAxis>
+                                        <NumberAxis fx:id="yAxisBlast" label="Number of Matches" side="LEFT" />
+                                      </yAxis>
+                                       <padding>
+                                          <Insets bottom="20.0" left="10.0" right="20.0" top="20.0" />
+                                       </padding>
+                                    </BarChart>
+                                    <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                       <top>
+                                          <GridPane BorderPane.alignment="CENTER">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <JFXTextField fx:id="txtBlastHitTableSearch" focusColor="#26a69a" promptText="Search " GridPane.columnIndex="2">
+                                                   <padding>
+                                                      <Insets right="20.0" />
+                                                   </padding></JFXTextField>
+                                             </children>
+                                          </GridPane>
+                                       </top>
+                                       <center>
+                                          <JFXTreeTableView fx:id="tblBlastHit" BorderPane.alignment="CENTER">
+                                             <BorderPane.margin>
+                                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                             </BorderPane.margin>
+                                          </JFXTreeTableView>
+                                       </center>
+                                    </BorderPane>
+                                 </children>
+                              </GridPane>
+                           </children></AnchorPane>
+                    </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
