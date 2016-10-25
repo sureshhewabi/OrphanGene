@@ -6,7 +6,6 @@
 <?import com.jfoenix.controls.JFXHamburger?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
@@ -161,8 +160,8 @@
                                              <children>
                                                 <TableView fx:id="tblOverview" prefHeight="200.0" prefWidth="200.0">
                                                   <columns>
-                                                    <TableColumn prefWidth="150.0" text="Taxomony Level" />
-                                                    <TableColumn prefWidth="200.0" text="Number of Orphan Genes" />
+                                                    <TableColumn fx:id="overviewTaxonomyLevel" prefWidth="150.0" text="Taxomony Level" />
+                                                    <TableColumn fx:id="overviewCount" prefWidth="200.0" text="Number of Orphan Genes" />
                                                   </columns>
                                                    <GridPane.margin>
                                                       <Insets top="10.0" />
@@ -183,10 +182,10 @@
                                           </GridPane>
                                           <TableView fx:id="tblOrphanGenes" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                             <columns>
-                                              <TableColumn fx:id="colGeneId" prefWidth="200.0" text="Gene ID" />
-                                              <TableColumn fx:id="colGeneName" prefWidth="150.0" text="Gene Name" />
-                                                <TableColumn fx:id="colORFGeneLevel" prefWidth="250.0" text="ORF Gene Level" />
-                                                <TableColumn fx:id="colTaxanomyLevel" prefWidth="200.0" text="Taxanomy Level" />
+                                              <TableColumn fx:id="GeneId" prefWidth="200.0" text="Gene ID" />
+                                              <TableColumn fx:id="GeneName" prefWidth="150.0" text="Gene Name" />
+                                                <TableColumn fx:id="ORFanGeneLevel" prefWidth="250.0" text="ORF Gene Level" />
+                                                <TableColumn fx:id="TaxonomyLevel" prefWidth="141.0" text="Taxonomy Level" />
                                             </columns>
                                              <GridPane.margin>
                                                 <Insets bottom="20.0" top="10.0" />
@@ -249,11 +248,17 @@
                                                 </GridPane>
                                              </top>
                                              <center>
-                                                <JFXTreeTableView fx:id="tblBlastHit" BorderPane.alignment="CENTER">
+                                                <TableView fx:id="tblBlastHit" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                                  <columns>
+                                                    <TableColumn fx:id="detailTableId" prefWidth="93.0" text="No" />
+                                                    <TableColumn fx:id="detailTableRankName" prefWidth="132.0" text="Rank Name" />
+                                                      <TableColumn fx:id="detailTableTaxLevel" minWidth="0.0" prefWidth="216.0" text="Taxonomy Level" />
+                                                      <TableColumn fx:id="detailTableParentTaxLevel" minWidth="0.0" prefWidth="225.0" text="Parent Taxonomy Level" />
+                                                  </columns>
                                                    <BorderPane.margin>
                                                       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                                    </BorderPane.margin>
-                                                </JFXTreeTableView>
+                                                </TableView>
                                              </center>
                                           </BorderPane>
                                        </children>

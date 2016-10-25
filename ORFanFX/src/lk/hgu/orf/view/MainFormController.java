@@ -9,21 +9,27 @@ import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import lk.hgu.orf.model.BlastResult;
+import lk.hgu.orf.model.ORFGene;
+import lk.hgu.orf.model.ORFanGeneOverview;
 import lk.hgu.orf.test.ChartData;
+import lk.hgu.orf.test.TableData;
 
 /**
  *
@@ -44,7 +50,13 @@ public class MainFormController implements Initializable {
     private VBox dataPane;
 
     @FXML
-    private TableView<?> tblOverview;
+    private TableView<ORFanGeneOverview> tblOverview;
+
+    @FXML
+    private TableColumn<ORFanGeneOverview, String> overviewTaxonomyLevel;
+
+    @FXML
+    private TableColumn<ORFanGeneOverview, Integer> overviewCount;
 
     @FXML
     private BarChart<String, Number> chartOverview;
@@ -56,19 +68,19 @@ public class MainFormController implements Initializable {
     private NumberAxis yAxisOverview;
 
     @FXML
-    private TableView<?> tblOrphanGenes;
+    private TableView<ORFGene> tblOrphanGenes;
 
     @FXML
-    private TableColumn<?, ?> colGeneId;
+    private TableColumn<ORFGene, String> GeneId;
 
     @FXML
-    private TableColumn<?, ?> colGeneName;
+    private TableColumn<ORFGene, String> GeneName;
 
     @FXML
-    private TableColumn<?, ?> colORFGeneLevel;
+    private TableColumn<ORFGene, String> ORFanGeneLevel;
 
     @FXML
-    private TableColumn<?, ?> colTaxanomyLevel;
+    private TableColumn<ORFGene, String> TaxonomyLevel;
 
     @FXML
     private BarChart<String, Number> chartBlastHit;
@@ -83,10 +95,23 @@ public class MainFormController implements Initializable {
     private JFXTextField txtBlastHitTableSearch;
 
     @FXML
-    private JFXTreeTableView<?> tblBlastHit;
+    private TableView<BlastResult> tblBlastHit;
+
+    @FXML
+    private TableColumn<BlastResult, Integer> detailTableId;
+
+    @FXML
+    private TableColumn<BlastResult, String> detailTableRankName;
+
+    @FXML
+    private TableColumn<BlastResult, String> detailTableTaxLevel;
+
+    @FXML
+    private TableColumn<BlastResult, String> detailTableParentTaxLevel;
 
     private VBox box;
     private HamburgerBackArrowBasicTransition transition;
+    TableData td = new TableData();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -101,6 +126,11 @@ public class MainFormController implements Initializable {
             // fill chart with data
             chartOverview.getData().add(cd.getOverviewChartData());
             chartBlastHit.getData().add(cd.getBlastChartData());
+
+            // file table with data
+            initORFanGeneTable();
+            initORFanGeneOverviewTable();
+            initBlastResultsTable();
 
         } catch (IOException e) {
             System.err.println("Error at MainFormController Init: " + e.getMessage());
@@ -119,5 +149,55 @@ public class MainFormController implements Initializable {
         } else {
             drawer.open();
         }
+    }
+
+    void initORFanGeneTable() {
+
+        TableData td = new TableData();
+        GeneId.setCellValueFactory(new PropertyValueFactory<>("GeneId"));
+        GeneName.setCellValueFactory(new PropertyValueFactory<>("GeneName"));
+        ORFanGeneLevel.setCellValueFactory(new PropertyValueFactory<>("ORFanGeneLevel"));
+        TaxonomyLevel.setCellValueFactory(new PropertyValueFactory<>("TaxonomyLevel"));
+
+        ObservableList<ORFGene> data = td.getORFGeneData();
+
+        System.out.println("No of records : " + data.size());
+        for (ORFGene oRFGene : data) {
+            System.out.println(oRFGene.toString());
+        }
+        tblOrphanGenes.setItems(data);
+        System.out.println("Table data set");
+    }
+
+    void initORFanGeneOverviewTable() {
+
+        overviewTaxonomyLevel.setCellValueFactory(new PropertyValueFactory<>("overviewTaxonomyLevel"));
+        overviewCount.setCellValueFactory(new PropertyValueFactory<>("overviewCount"));
+
+        ObservableList<ORFanGeneOverview> data = td.getORFGeneOverviewData();
+
+        System.out.println("No of records : " + data.size());
+        for (ORFanGeneOverview oRFGene : data) {
+            System.out.println(oRFGene.toString());
+        }
+        tblOverview.setItems(data);
+        System.out.println("Table data set");
+    }
+
+    void initBlastResultsTable() {
+
+        detailTableId.setCellValueFactory(new PropertyValueFactory<>("detailTableId"));
+        detailTableRankName.setCellValueFactory(new PropertyValueFactory<>("detailTableRankName"));
+        detailTableTaxLevel.setCellValueFactory(new PropertyValueFactory<>("detailTableTaxLevel"));
+        detailTableParentTaxLevel.setCellValueFactory(new PropertyValueFactory<>("detailTableParentTaxLevel"));
+
+        ObservableList<BlastResult> data = td.getBlastResultsData();
+
+        System.out.println("No of records : " + data.size());
+        for (BlastResult oRFGene : data) {
+            System.out.println(oRFGene.toString());
+        }
+        tblBlastHit.setItems(data);
+        System.out.println("Table data set");
     }
 }

@@ -1,69 +1,57 @@
 package lk.hgu.orf.model;
 
+import javafx.beans.property.SimpleStringProperty;
+
 /**
  *
  * @author Suresh Hewapathirana
  */
 public class ORFGene {
 
-    private String GeneID;
-    private String GeneName;
-    private String ORFanGeneLevel;
-    private String TaxonomyLevel;
+    private final SimpleStringProperty GeneId;
+    private final SimpleStringProperty GeneName;
+    private final SimpleStringProperty ORFanGeneLevel;
+    private final SimpleStringProperty TaxonomyLevel;
+
+    public ORFGene(String GeneId, String GeneName, String ORFanGeneLevel, String TaxonomyLevel) {
+        this.GeneId = new SimpleStringProperty(GeneId);
+        this.GeneName = new SimpleStringProperty(GeneName);
+        this.ORFanGeneLevel = new SimpleStringProperty(ORFanGeneLevel);
+        this.TaxonomyLevel = new SimpleStringProperty(TaxonomyLevel);
+    }
 
     /**
      * @return the GeneID
      */
-    public String getGeneID() {
-        return GeneID;
-    }
-
-    /**
-     * @param GeneID the GeneID to set
-     */
-    public void setGeneID(String GeneID) {
-        this.GeneID = GeneID;
+    public String getGeneId() {
+        return GeneId.get();
     }
 
     /**
      * @return the GeneName
      */
     public String getGeneName() {
-        return GeneName;
-    }
-
-    /**
-     * @param GeneName the GeneName to set
-     */
-    public void setGeneName(String GeneName) {
-        this.GeneName = GeneName;
+        return GeneName.get();
     }
 
     /**
      * @return the ORFanGeneLevel
      */
     public String getORFanGeneLevel() {
-        return ORFanGeneLevel;
-    }
-
-    /**
-     * @param ORFanGeneLevel the ORFanGeneLevel to set
-     */
-    public void setORFanGeneLevel(String ORFanGeneLevel) {
-        this.ORFanGeneLevel = ORFanGeneLevel;
+        return ORFanGeneLevel.get();
     }
 
     /**
      * @return the TaxonomyLevel
      */
     public String getTaxonomyLevel() {
-        return TaxonomyLevel;
+        return TaxonomyLevel.get();
     }
 
-    /**
-     * @param TaxonomyLevel the TaxonomyLevel to set
-     */
-    public void setTaxonomyLevel(String TaxonomyLevel) {
-        this.TaxonomyLevel = TaxonomyLevel;
+    @Override
+    public String toString() {
+        return "ORFGene{" + "GeneID=" + GeneId + ", GeneName=" + GeneName + ", ORFanGeneLevel=" + ORFanGeneLevel + ", TaxonomyLevel=" + TaxonomyLevel + '}';
     }
+
+    
 }
