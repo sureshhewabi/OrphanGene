@@ -16,12 +16,12 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -35,7 +35,7 @@
          <top>
             <Pane fx:id="paneHeader" prefHeight="71.0" prefWidth="704.0" style="-fx-background-color: #009688;" BorderPane.alignment="CENTER">
                <children>
-                  <JFXHamburger fx:id="hamburgerSideMenu" layoutX="14.0" layoutY="26.0" />
+                  <JFXHamburger fx:id="hamburgerSideMenu" layoutX="14.0" layoutY="26.0" onMouseClicked="#hamburgerSideMenu_clicked" />
                   <Text fill="WHITE" layoutX="75.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ORFan Gene Finder">
                      <font>
                         <Font size="26.0" />
@@ -73,54 +73,66 @@
                                        <effect>
                                           <Glow level="0.25" />
                                        </effect>
+                                       <tooltip>
+                                          <Tooltip text="Enter protein sequence or drag and drop FASTA file" />
+                                       </tooltip>
                                     </JFXTextArea>
-                                    <FlowPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
-                                       <children>
-                                          <BorderPane prefHeight="70.0" prefWidth="793.0">
-                                             <top>
-                                                <GridPane BorderPane.alignment="CENTER">
-                                                  <columnConstraints>
-                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                  </columnConstraints>
-                                                  <rowConstraints>
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                  </rowConstraints>
-                                                   <children>
-                                                      <Hyperlink text="Show an Example" GridPane.rowIndex="1">
-                                                         <GridPane.margin>
-                                                            <Insets left="20.0" top="50.0" />
-                                                         </GridPane.margin>
-                                                      </Hyperlink>
-                                                      <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                                         <right>
-                                                            <JFXButton fx:id="btnFindOrphanGenes" buttonType="RAISED" style="-fx-background-color: #009688;" text="Find Orphan Genes" textFill="WHITE" BorderPane.alignment="CENTER">
-                                                               <BorderPane.margin>
-                                                                  <Insets right="30.0" top="50.0" />
-                                                               </BorderPane.margin>
-                                                            </JFXButton>
-                                                         </right>
-                                                      </BorderPane>
-                                                      <JFXTextField focusColor="#26a69a" labelFloat="true" maxWidth="370.0" minWidth="370.0" prefHeight="33.0" prefWidth="370.0" promptText="Organism">
-                                                         <GridPane.margin>
-                                                            <Insets left="20.0" top="20.0" />
-                                                         </GridPane.margin>
+                                    <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                       <top>
+                                          <GridPane BorderPane.alignment="CENTER">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <BorderPane prefHeight="200.0" prefWidth="200.0">
+                                                   <center>
+                                                      <JFXTextField focusColor="#26a69a" labelFloat="true" promptText="Organism" BorderPane.alignment="TOP_LEFT">
+                                                         <BorderPane.margin>
+                                                            <Insets />
+                                                         </BorderPane.margin>
+                                                         <padding>
+                                                            <Insets left="20.0" />
+                                                         </padding>
                                                       </JFXTextField>
-                                                      <JFXComboBox prefHeight="27.0" prefWidth="365.0" promptText="Database" GridPane.columnIndex="1">
-                                                         <GridPane.margin>
-                                                            <Insets left="20.0" right="20.0" top="20.0" />
-                                                         </GridPane.margin>
+                                                   </center>
+                                                   <bottom>
+                                                      <Hyperlink text="Show an Example" BorderPane.alignment="TOP_LEFT">
+                                                         <padding>
+                                                            <Insets left="20.0" />
+                                                         </padding>
+                                                         <BorderPane.margin>
+                                                            <Insets top="20.0" />
+                                                         </BorderPane.margin>
+                                                      </Hyperlink>
+                                                   </bottom>
+                                                </BorderPane>
+                                                <BorderPane GridPane.columnIndex="1">
+                                                   <center>
+                                                      <JFXComboBox maxWidth="1.7976931348623157E308" promptText="Database" BorderPane.alignment="TOP_LEFT">
+                                                         <BorderPane.margin>
+                                                            <Insets left="20.0" right="20.0" />
+                                                         </BorderPane.margin>
                                                       </JFXComboBox>
-                                                   </children>
-                                                </GridPane>
-                                             </top>
-                                             <padding>
-                                                <Insets top="20.0" />
-                                             </padding>
-                                          </BorderPane>
-                                       </children>
-                                    </FlowPane>
+                                                   </center>
+                                                   <bottom>
+                                                      <JFXButton fx:id="btnFindOrphanGenes" buttonType="RAISED" style="-fx-background-color: #009688;" text="Find Orphan Genes" textFill="WHITE" BorderPane.alignment="CENTER_RIGHT">
+                                                         <BorderPane.margin>
+                                                            <Insets right="20.0" top="20.0" />
+                                                         </BorderPane.margin>
+                                                      </JFXButton>
+                                                   </bottom>
+                                                </BorderPane>
+                                             </children>
+                                             <BorderPane.margin>
+                                                <Insets top="40.0" />
+                                             </BorderPane.margin>
+                                          </GridPane>
+                                       </top>
+                                    </BorderPane>
                                  </children>
                               </GridPane>
                            </content>
@@ -129,7 +141,7 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <GridPane hgap="10.0" layoutX="119.0" layoutY="167.0" prefHeight="182.0" prefWidth="226.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <GridPane hgap="10.0" layoutX="119.0" layoutY="167.0" prefHeight="182.0" prefWidth="226.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
                                       <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                       </columnConstraints>
@@ -177,8 +189,11 @@
                                                 <TableColumn fx:id="colTaxanomyLevel" prefWidth="200.0" text="Taxanomy Level" />
                                             </columns>
                                              <GridPane.margin>
-                                                <Insets top="10.0" />
+                                                <Insets bottom="20.0" top="10.0" />
                                              </GridPane.margin>
+                                             <padding>
+                                                <Insets bottom="20.0" />
+                                             </padding>
                                           </TableView>
                                        </children>
                                        <padding>

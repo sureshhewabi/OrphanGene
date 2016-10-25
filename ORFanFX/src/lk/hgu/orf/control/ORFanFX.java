@@ -14,13 +14,14 @@ import javafx.stage.Stage;
 public class ORFanFX extends Application {
     
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage window) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/lk/hgu/orf/view/MainForm.fxml"));
     
         Scene scene = new Scene(root);
        
-        stage.setScene(scene);
-        stage.show();
+        window.setScene(scene);
+        window.setTitle("ORFan Finder");
+        window.show();
     }
 
     /**

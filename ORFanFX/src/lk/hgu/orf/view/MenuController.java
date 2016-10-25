@@ -48,9 +48,10 @@ public class MenuController implements Initializable {
 
         Parent settingsPage = FXMLLoader.load(getClass().getResource("/lk/hgu/orf/view/SettingsOverview.fxml"));
         Scene settingScene = new Scene(settingsPage);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(settingScene);
-        stage.show();
+        Stage window = new Stage(); //(Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setTitle("ORFan Finder - Settings");
+        window.setScene(settingScene);
+        window.show();
     }
 
     @FXML

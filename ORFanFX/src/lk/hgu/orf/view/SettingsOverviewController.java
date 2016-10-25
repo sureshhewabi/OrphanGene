@@ -1,22 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package lk.hgu.orf.view;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.JFXSlider;
-import java.awt.Image;
+import com.jfoenix.controls.JFXTextField;
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 
 /**
  * FXML Controller class
@@ -25,19 +19,26 @@ import javafx.scene.layout.VBox;
  */
 public class SettingsOverviewController implements Initializable {
 
-    
-    
-      @FXML
+    @FXML
     private VBox dataPane;
 
     @FXML
     private JFXButton btnDatabaseUpload;
 
     @FXML
+    private JFXTextField txtDatabaseFile;
+
+    @FXML
     private JFXButton btnTaxonomyUpload;
 
     @FXML
+    private JFXTextField txtSpeciesFile;
+
+    @FXML
     private JFXButton btnSpeciesUpload;
+
+    @FXML
+    private JFXTextField txtTaxonomyFile;
 
     @FXML
     private JFXSlider sliderThreads;
@@ -46,22 +47,56 @@ public class SettingsOverviewController implements Initializable {
     private JFXButton btnMainForm;
 
     @FXML
-    private JFXHamburger hamburgerSideMenu;
-    
-    
+    private JFXButton btnSaveOverview;
 
- 
- 
-    
+    @FXML
+    private JFXButton btnSaveTaxonomy;
+
+    @FXML
+    private JFXButton btnSaveSpecies;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Settings Init");
-            alert.setHeaderText("TEST");
+
     }
-   
-    
+
+    @FXML
+    void btnDatabaseUpload_clicked(ActionEvent event) {
+        txtDatabaseFile.setText(getFilePath());
+    }
+
+    @FXML
+    void btnSpeciesUpload_clicked(ActionEvent event) {
+        txtSpeciesFile.setText(getFilePath());
+    }
+
+    @FXML
+    void btnTaxonomyUpload_clicked(ActionEvent event) {
+        txtTaxonomyFile.setText(getFilePath());
+    }
+
+    @FXML
+    void btnMainForm_clicked(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btnSaveSpecies_clicked(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btnSaveTaxonomy_clicked(ActionEvent event) {
+
+    }
+
+    private String getFilePath() {
+        FileChooser fc = new FileChooser();
+        File selectedFile = fc.showOpenDialog(null);
+        return selectedFile.getPath();
+    }
+
 }
