@@ -160,11 +160,6 @@ public class MainFormController implements Initializable {
         TaxonomyLevel.setCellValueFactory(new PropertyValueFactory<>("TaxonomyLevel"));
 
         ObservableList<ORFGene> data = td.getORFGeneData();
-
-        System.out.println("No of records : " + data.size());
-        for (ORFGene oRFGene : data) {
-            System.out.println(oRFGene.toString());
-        }
         tblOrphanGenes.setItems(data);
         System.out.println("Table data set");
     }
@@ -175,11 +170,6 @@ public class MainFormController implements Initializable {
         overviewCount.setCellValueFactory(new PropertyValueFactory<>("overviewCount"));
 
         ObservableList<ORFanGeneOverview> data = td.getORFGeneOverviewData();
-
-        System.out.println("No of records : " + data.size());
-        for (ORFanGeneOverview oRFGene : data) {
-            System.out.println(oRFGene.toString());
-        }
         tblOverview.setItems(data);
         System.out.println("Table data set");
     }
@@ -192,11 +182,6 @@ public class MainFormController implements Initializable {
         detailTableParentTaxLevel.setCellValueFactory(new PropertyValueFactory<>("detailTableParentTaxLevel"));
 
         ObservableList<BlastResult> data = td.getBlastResultsData();
-
-        System.out.println("No of records : " + data.size());
-        for (BlastResult oRFGene : data) {
-            System.out.println(oRFGene.toString());
-        }
         tblBlastHit.setItems(data);
         System.out.println("Table data set");
     }
