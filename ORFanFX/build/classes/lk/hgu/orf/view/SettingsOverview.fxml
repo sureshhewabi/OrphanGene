@@ -5,6 +5,7 @@
 <?import com.jfoenix.controls.JFXSlider?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -52,14 +53,23 @@
                                             </rowConstraints>
                                              <children>
                                                 <Label text="Database File" />
-                                                <JFXButton fx:id="btnDatabaseUpload" buttonType="RAISED" onAction="#btnDatabaseUpload_clicked" style="-fx-background-color: #009688;" text="Upload" textFill="WHITE" GridPane.columnIndex="3" />
+                                                <JFXButton fx:id="btnDatabaseUpload" buttonType="RAISED" onAction="#btnDatabaseUpload_clicked" style="-fx-background-color: #009688;" text="Upload" textFill="WHITE" GridPane.columnIndex="3">
+                                                   <cursor>
+                                                      <Cursor fx:constant="HAND" />
+                                                   </cursor></JFXButton>
                                                 <JFXTextField fx:id="txtDatabaseFile" focusColor="#26a69a" maxWidth="644.0" minWidth="526.0" prefHeight="33.0" prefWidth="526.0" GridPane.columnIndex="1" />
                                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Taxonomy File" GridPane.rowIndex="2" />
                                                 <Label text="Species File" GridPane.rowIndex="4" />
                                                 <Label text="Number of Threads" GridPane.rowIndex="6" />
-                                                <JFXButton fx:id="btnTaxonomyUpload" buttonType="RAISED" onAction="#btnTaxonomyUpload_clicked" style="-fx-background-color: #009688;" text="Upload" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                                <JFXButton fx:id="btnTaxonomyUpload" buttonType="RAISED" onAction="#btnTaxonomyUpload_clicked" style="-fx-background-color: #009688;" text="Upload" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                                   <cursor>
+                                                      <Cursor fx:constant="HAND" />
+                                                   </cursor></JFXButton>
                                                 <JFXTextField fx:id="txtSpeciesFile" focusColor="#26a69a" maxWidth="644.0" minWidth="526.0" prefHeight="33.0" prefWidth="526.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                <JFXButton fx:id="btnSpeciesUpload" buttonType="RAISED" onAction="#btnSpeciesUpload_clicked" style="-fx-background-color: #009688;" text="Upload" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                                <JFXButton fx:id="btnSpeciesUpload" buttonType="RAISED" onAction="#btnSpeciesUpload_clicked" style="-fx-background-color: #009688;" text="Upload" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                                                   <cursor>
+                                                      <Cursor fx:constant="HAND" />
+                                                   </cursor></JFXButton>
                                                 <JFXTextField fx:id="txtTaxonomyFile" focusColor="#26a69a" maxWidth="644.0" minWidth="526.0" prefHeight="33.0" prefWidth="526.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                 <JFXSlider fx:id="sliderThreads" blockIncrement="1.0" majorTickUnit="1.0" max="12.0" min="3.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" value="5.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                                    <GridPane.margin>
@@ -72,10 +82,16 @@
                                        <bottom>
                                           <BorderPane BorderPane.alignment="CENTER">
                                              <left>
-                                                <JFXButton fx:id="btnMainForm" buttonType="RAISED" style="-fx-background-color: #009688;" text="Main Form" textFill="WHITE" BorderPane.alignment="CENTER" />
+                                                <JFXButton fx:id="btnMainForm" buttonType="RAISED" style="-fx-background-color: #009688;" text="Main Form" textFill="WHITE" BorderPane.alignment="CENTER">
+                                                   <cursor>
+                                                      <Cursor fx:constant="HAND" />
+                                                   </cursor></JFXButton>
                                              </left>
                                              <right>
-                                                <JFXButton fx:id="btnSaveOverview" buttonType="RAISED" prefHeight="27.0" prefWidth="98.0" style="-fx-background-color: #009688;" text="SAVE" textFill="WHITE" BorderPane.alignment="CENTER" />
+                                                <JFXButton fx:id="btnSaveOverview" buttonType="RAISED" prefHeight="27.0" prefWidth="98.0" style="-fx-background-color: #009688;" text="SAVE" textFill="WHITE" BorderPane.alignment="CENTER">
+                                                   <cursor>
+                                                      <Cursor fx:constant="HAND" />
+                                                   </cursor></JFXButton>
                                              </right>
                                              <BorderPane.margin>
                                                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -108,6 +124,9 @@
                                                                <VBox.margin>
                                                                   <Insets bottom="20.0" />
                                                                </VBox.margin>
+                                                               <cursor>
+                                                                  <Cursor fx:constant="HAND" />
+                                                               </cursor>
                                                             </JFXButton>
                                                             <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefWidth="50.0" style="-fx-background-color: #009688;" text="&gt;" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
                                                                <font>
@@ -116,6 +135,9 @@
                                                                <VBox.margin>
                                                                   <Insets bottom="20.0" />
                                                                </VBox.margin>
+                                                               <cursor>
+                                                                  <Cursor fx:constant="HAND" />
+                                                               </cursor>
                                                             </JFXButton>
                                                             <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefWidth="50.0" style="-fx-background-color: #009688;" text="&lt;" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
                                                                <font>
@@ -124,11 +146,17 @@
                                                                <VBox.margin>
                                                                   <Insets bottom="20.0" />
                                                                </VBox.margin>
+                                                               <cursor>
+                                                                  <Cursor fx:constant="HAND" />
+                                                               </cursor>
                                                             </JFXButton>
                                                             <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefWidth="50.0" style="-fx-background-color: #009688;" text="&lt;&lt;" textFill="WHITE" textOverrun="CLIP">
                                                                <font>
                                                                   <Font name="System Bold" size="14.0" />
                                                                </font>
+                                                               <cursor>
+                                                                  <Cursor fx:constant="HAND" />
+                                                               </cursor>
                                                             </JFXButton>
                                                          </children>
                                                       </VBox>
@@ -144,7 +172,10 @@
                                        <bottom>
                                           <BorderPane BorderPane.alignment="CENTER">
                                              <right>
-                                                <JFXButton fx:id="btnSaveTaxonomy" buttonType="RAISED" onAction="#btnSaveTaxonomy_clicked" prefHeight="34.0" prefWidth="69.0" style="-fx-background-color: #009688;" text="SAVE" textFill="WHITE" BorderPane.alignment="CENTER" />
+                                                <JFXButton fx:id="btnSaveTaxonomy" buttonType="RAISED" onAction="#btnSaveTaxonomy_clicked" prefHeight="34.0" prefWidth="69.0" style="-fx-background-color: #009688;" text="SAVE" textFill="WHITE" BorderPane.alignment="CENTER">
+                                                   <cursor>
+                                                      <Cursor fx:constant="HAND" />
+                                                   </cursor></JFXButton>
                                              </right>
                                              <BorderPane.margin>
                                                 <Insets bottom="20.0" right="20.0" top="20.0" />
@@ -176,6 +207,9 @@
                                                                <VBox.margin>
                                                                   <Insets bottom="20.0" />
                                                                </VBox.margin>
+                                                               <cursor>
+                                                                  <Cursor fx:constant="HAND" />
+                                                               </cursor>
                                                             </JFXButton>
                                                             <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefWidth="50.0" style="-fx-background-color: #009688;" text="&gt;" textFill="WHITE" textOverrun="CLIP">
                                                                <font>
@@ -184,6 +218,9 @@
                                                                <VBox.margin>
                                                                   <Insets bottom="20.0" />
                                                                </VBox.margin>
+                                                               <cursor>
+                                                                  <Cursor fx:constant="HAND" />
+                                                               </cursor>
                                                             </JFXButton>
                                                             <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefWidth="50.0" style="-fx-background-color: #009688;" text="&lt;" textFill="WHITE" textOverrun="CLIP">
                                                                <font>
@@ -192,11 +229,17 @@
                                                                <VBox.margin>
                                                                   <Insets bottom="20.0" />
                                                                </VBox.margin>
+                                                               <cursor>
+                                                                  <Cursor fx:constant="HAND" />
+                                                               </cursor>
                                                             </JFXButton>
                                                             <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefWidth="50.0" style="-fx-background-color: #009688;" text="&lt;&lt;" textFill="WHITE" textOverrun="CLIP">
                                                                <font>
                                                                   <Font name="System Bold" size="14.0" />
                                                                </font>
+                                                               <cursor>
+                                                                  <Cursor fx:constant="HAND" />
+                                                               </cursor>
                                                             </JFXButton>
                                                          </children>
                                                       </VBox>
@@ -212,7 +255,10 @@
                                        <bottom>
                                           <BorderPane BorderPane.alignment="CENTER">
                                              <right>
-                                                <JFXButton fx:id="btnSaveSpecies" buttonType="RAISED" onAction="#btnSaveSpecies_clicked" prefHeight="34.0" prefWidth="69.0" style="-fx-background-color: #009688;" text="SAVE" textFill="WHITE" BorderPane.alignment="CENTER" />
+                                                <JFXButton fx:id="btnSaveSpecies" buttonType="RAISED" onAction="#btnSaveSpecies_clicked" prefHeight="34.0" prefWidth="69.0" style="-fx-background-color: #009688;" text="SAVE" textFill="WHITE" BorderPane.alignment="CENTER">
+                                                   <cursor>
+                                                      <Cursor fx:constant="HAND" />
+                                                   </cursor></JFXButton>
                                              </right>
                                              <BorderPane.margin>
                                                 <Insets bottom="20.0" right="20.0" top="20.0" />

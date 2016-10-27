@@ -4,14 +4,10 @@ import com.jfoenix.controls.JFXDrawer;
 
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -161,7 +157,6 @@ public class MainFormController implements Initializable {
 
         ObservableList<ORFGene> data = td.getORFGeneData();
         tblOrphanGenes.setItems(data);
-        System.out.println("Table data set");
     }
 
     void initORFanGeneOverviewTable() {
@@ -171,7 +166,6 @@ public class MainFormController implements Initializable {
 
         ObservableList<ORFanGeneOverview> data = td.getORFGeneOverviewData();
         tblOverview.setItems(data);
-        System.out.println("Table data set");
     }
 
     void initBlastResultsTable() {
@@ -183,6 +177,5 @@ public class MainFormController implements Initializable {
 
         ObservableList<BlastResult> data = td.getBlastResultsData();
         tblBlastHit.setItems(data);
-        System.out.println("Table data set");
     }
 }
