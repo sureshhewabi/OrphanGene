@@ -128,6 +128,9 @@ public class MainFormController implements Initializable {
             initORFanGeneOverviewTable();
             initBlastResultsTable();
 
+            // set width for tables
+            initTableWidths();
+            
         } catch (IOException e) {
             System.err.println("Error at MainFormController Init: " + e.getMessage());
         }
@@ -177,5 +180,24 @@ public class MainFormController implements Initializable {
 
         ObservableList<BlastResult> data = td.getBlastResultsData();
         tblBlastHit.setItems(data);
+    }
+
+    void initTableWidths() {
+        
+        // Overview Table
+        overviewTaxonomyLevel.prefWidthProperty().bind(tblOverview.widthProperty().multiply(0.6));
+        overviewCount.prefWidthProperty().bind(tblOverview.widthProperty().multiply(0.4));
+
+        // Orphan Gene Table
+        GeneId.prefWidthProperty().bind(tblOrphanGenes.widthProperty().multiply(0.2));
+        GeneName.prefWidthProperty().bind(tblOrphanGenes.widthProperty().multiply(0.4));
+        ORFanGeneLevel.prefWidthProperty().bind(tblOrphanGenes.widthProperty().multiply(0.2));
+        TaxonomyLevel.prefWidthProperty().bind(tblOrphanGenes.widthProperty().multiply(0.2));
+
+        // BLAST Hits detailed table
+        detailTableId.prefWidthProperty().bind(tblBlastHit.widthProperty().multiply(0.1));
+        detailTableRankName.prefWidthProperty().bind(tblBlastHit.widthProperty().multiply(0.2));
+        detailTableTaxLevel.prefWidthProperty().bind(tblBlastHit.widthProperty().multiply(0.35));
+        detailTableParentTaxLevel.prefWidthProperty().bind(tblBlastHit.widthProperty().multiply(0.35));
     }
 }

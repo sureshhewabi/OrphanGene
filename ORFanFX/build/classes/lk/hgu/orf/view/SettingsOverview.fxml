@@ -111,7 +111,7 @@
                                        <center>
                                           <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                              <children>
-                                                <JFXListView />
+                                                <JFXListView fx:id="txtSettingTaxFrom" />
                                                 <VBox prefHeight="200.0" prefWidth="100.0">
                                                    <children>
                                                       <Pane prefHeight="200.0" prefWidth="200.0" />
@@ -162,7 +162,7 @@
                                                       </VBox>
                                                    </children>
                                                 </VBox>
-                                                <JFXListView />
+                                                <JFXListView fx:id="txtSettingTaxTo" />
                                              </children>
                                              <BorderPane.margin>
                                                 <Insets top="20.0" />
@@ -194,7 +194,7 @@
                                        <center>
                                           <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                              <children>
-                                                <JFXListView />
+                                                <JFXListView fx:id="txtSettingSpeciesFrom" />
                                                 <VBox prefHeight="200.0" prefWidth="100.0">
                                                    <children>
                                                       <Pane prefHeight="200.0" prefWidth="200.0" />
@@ -245,7 +245,7 @@
                                                       </VBox>
                                                    </children>
                                                 </VBox>
-                                                <JFXListView />
+                                                <JFXListView fx:id="txtSettingSpeciesTo" />
                                              </children>
                                              <BorderPane.margin>
                                                 <Insets top="20.0" />
