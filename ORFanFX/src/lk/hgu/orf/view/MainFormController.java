@@ -1,14 +1,23 @@
 package lk.hgu.orf.view;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 
 import com.jfoenix.controls.JFXHamburger;
+import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,11 +30,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import lk.hgu.orf.control.Preprocess;
 import lk.hgu.orf.model.BlastResult;
 import lk.hgu.orf.model.ORFGene;
 import lk.hgu.orf.model.ORFanGeneOverview;
 import lk.hgu.orf.test.ChartData;
 import lk.hgu.orf.test.TableData;
+import lk.hgu.orf.util.Util;
 
 /**
  *
@@ -91,6 +102,12 @@ public class MainFormController implements Initializable {
     private JFXTextField txtBlastHitTableSearch;
 
     @FXML
+    private JFXTextArea txtProteinSequence;
+
+    @FXML
+    private JFXButton btnFindOrphanGenes;
+
+    @FXML
     private TableView<BlastResult> tblBlastHit;
 
     @FXML
@@ -130,7 +147,8 @@ public class MainFormController implements Initializable {
 
             // set width for tables
             initTableWidths();
-            
+
+            // Drag and Drop
         } catch (IOException e) {
             System.err.println("Error at MainFormController Init: " + e.getMessage());
         }
@@ -139,7 +157,10 @@ public class MainFormController implements Initializable {
     @FXML
     void hamburgerSideMenu_clicked(MouseEvent event) {
 
+        // set the menu to the side drawer
         drawer.setSidePane(box);
+
+        // if transition is open, then set it to close. and vice versa
         transition.setRate(transition.getRate() * -1);
         transition.play();
 
@@ -148,6 +169,29 @@ public class MainFormController implements Initializable {
         } else {
             drawer.open();
         }
+    }
+
+    @FXML
+    void btnFindOrphanGenes_clicked(ActionEvent event) {
+
+        Preprocess prep = new Preprocess();
+        Map<String, String> settings = new HashMap<>();
+
+        // create a ID file for indexing
+        String inputFastaFile = txtProteinSequence.getText();
+        prep.createIDFile(inputFastaFile);
+
+        // BLAST
+        settings = Util.getSettings();
+        System.out.println("############### BLAST PARAMETERS ################");
+        System.out.println("-query " + inputFastaFile);
+        System.out.println("-db " + settings.get("defalt_database"));
+        System.out.println("-outfmt 6");
+        System.out.println("-max_target_seqs " + settings.get("defalt_maxtargetseq"));
+        System.out.println("-evalue " + settings.get("defalt_maxevalue"));
+        System.out.println("-out blastoutput.bl");
+        System.out.println("-num_threads " + settings.get("defalt_threads"));
+        System.out.println("-blastMethod " + settings.get("defalt_blastmethod"));
     }
 
     void initORFanGeneTable() {
@@ -182,8 +226,12 @@ public class MainFormController implements Initializable {
         tblBlastHit.setItems(data);
     }
 
+    /**
+     * This function sets column widths of each table dynamically based on the
+     * with of the parent table.
+     */
     void initTableWidths() {
-        
+
         // Overview Table
         overviewTaxonomyLevel.prefWidthProperty().bind(tblOverview.widthProperty().multiply(0.6));
         overviewCount.prefWidthProperty().bind(tblOverview.widthProperty().multiply(0.4));
@@ -200,4 +248,20 @@ public class MainFormController implements Initializable {
         detailTableTaxLevel.prefWidthProperty().bind(tblBlastHit.widthProperty().multiply(0.35));
         detailTableParentTaxLevel.prefWidthProperty().bind(tblBlastHit.widthProperty().multiply(0.35));
     }
+
+//    private Map<String, String> loadSettings(){
+////        Map<String, String> settings = new HashMap<>();
+////        
+////           settings =  Util.getSettings();
+////    
+////                    // Set property values to relevant fields
+////            txtDatabaseFile.setText(settings.get("defalt_database"));
+////            txtSpeciesFile.setText(settings.get("defalt_species"));
+////            txtTaxonomyFile.setText(settings.get("defalt_taxonomy"));
+////            txtMaxEValue.setText(settings.get("defalt_maxevalue"));
+////            txtMaxTargetSeq.setText(settings.get("defalt_maxtargetseq"));
+////            sliderThreads.setValue(Double.parseDouble(settings.get("defalt_threads")));
+//
+//        return settings;
+//    }
 }

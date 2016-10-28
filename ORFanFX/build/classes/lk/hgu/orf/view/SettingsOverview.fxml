@@ -109,7 +109,7 @@
                                        <bottom>
                                           <BorderPane BorderPane.alignment="CENTER">
                                              <left>
-                                                <JFXButton fx:id="btnMainForm" buttonType="RAISED" style="-fx-background-color: #009688;" text="Reset to Defaults" textFill="WHITE" BorderPane.alignment="CENTER">
+                                                <JFXButton fx:id="btnResetDefault" buttonType="RAISED" style="-fx-background-color: #009688;" text="Reset to Defaults" textFill="WHITE" BorderPane.alignment="CENTER">
                                                    <cursor>
                                                       <Cursor fx:constant="HAND" />
                                                    </cursor></JFXButton>

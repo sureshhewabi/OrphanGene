@@ -12,7 +12,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -23,6 +25,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import lk.hgu.orf.util.Util;
 
 /**
  * FXML Controller class
@@ -54,8 +57,8 @@ public class SettingsOverviewController implements Initializable {
 
     @FXML
     private JFXSlider sliderThreads;
-    
-      @FXML
+
+    @FXML
     private JFXTextField txtMaxEValue;
 
     @FXML
@@ -153,37 +156,17 @@ public class SettingsOverviewController implements Initializable {
 
     private void loadProperties() {
 
-        Properties prop = new Properties();
-        InputStream input = null;
+        Map<String, String> settings = new HashMap<>();
 
-        try {
+        settings = Util.getSettings();
 
-            input = new FileInputStream("config.properties");
-
-            // load the property file
-            prop.load(input);
-
-            // Set property values to relevant fields
-            txtDatabaseFile.setText(prop.getProperty("defalt_database"));
-            txtSpeciesFile.setText(prop.getProperty("defalt_species"));
-            txtTaxonomyFile.setText(prop.getProperty("defalt_taxonomy"));
-            txtMaxEValue.setText(prop.getProperty("defalt_maxevalue"));
-            txtMaxTargetSeq.setText(prop.getProperty("defalt_maxtargetseq"));
-            sliderThreads.setValue(Double.parseDouble(prop.getProperty("defalt_threads")));
-
-        } catch (IOException ex) {
-            System.out.println(" IOError: "+ ex.getMessage());
-        } finally {
-            if (input != null) {
-                try {
-                    // in the case of unsucceessful attempt, close the input
-                    input.close();
-                } catch (IOException e) {
-                    System.out.println(" IOError: "+ e.getMessage());
-                }
-            }
-        }
-
+        // Set property values to relevant fields
+        txtDatabaseFile.setText(settings.get("defalt_database"));
+        txtSpeciesFile.setText(settings.get("defalt_species"));
+        txtTaxonomyFile.setText(settings.get("defalt_taxonomy"));
+        txtMaxEValue.setText(settings.get("defalt_maxevalue"));
+        txtMaxTargetSeq.setText(settings.get("defalt_maxtargetseq"));
+        sliderThreads.setValue(Double.parseDouble(settings.get("defalt_threads")));
     }
 
 }
