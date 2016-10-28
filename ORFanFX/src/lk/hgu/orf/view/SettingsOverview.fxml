@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXSlider?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
@@ -35,60 +36,86 @@
                                  <children>
                                     <BorderPane layoutX="91.0" layoutY="82.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="60.0">
                                        <top>
-                                          <GridPane prefHeight="242.0" prefWidth="906.0" BorderPane.alignment="CENTER">
+                                          <GridPane BorderPane.alignment="CENTER">
                                             <columnConstraints>
-                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="472.0" minWidth="10.0" prefWidth="147.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="660.0" minWidth="10.0" prefWidth="603.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="660.0" minWidth="10.0" prefWidth="21.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="660.0" minWidth="10.0" prefWidth="147.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="472.0" minWidth="10.0" prefWidth="161.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="660.0" minWidth="10.0" prefWidth="585.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="660.0" minWidth="10.0" prefWidth="29.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="660.0" minWidth="10.0" prefWidth="138.0" />
                                             </columnConstraints>
                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <Label text="Database File" />
-                                                <JFXButton fx:id="btnDatabaseUpload" buttonType="RAISED" onAction="#btnDatabaseUpload_clicked" style="-fx-background-color: #009688;" text="Upload" textFill="WHITE" GridPane.columnIndex="3">
+                                                <Label text="Database File" GridPane.rowIndex="2" />
+                                                <JFXButton fx:id="btnDatabaseUpload" buttonType="RAISED" onAction="#btnDatabaseUpload_clicked" style="-fx-background-color: #009688;" text="Upload" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="2">
                                                    <cursor>
                                                       <Cursor fx:constant="HAND" />
                                                    </cursor></JFXButton>
-                                                <JFXTextField fx:id="txtDatabaseFile" focusColor="#26a69a" maxWidth="644.0" minWidth="526.0" prefHeight="33.0" prefWidth="526.0" GridPane.columnIndex="1" />
-                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Taxonomy File" GridPane.rowIndex="2" />
-                                                <Label text="Species File" GridPane.rowIndex="4" />
-                                                <Label text="Number of Threads" GridPane.rowIndex="6" />
-                                                <JFXButton fx:id="btnTaxonomyUpload" buttonType="RAISED" onAction="#btnTaxonomyUpload_clicked" style="-fx-background-color: #009688;" text="Upload" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                                <JFXTextField fx:id="txtDatabaseFile" focusColor="#26a69a" maxWidth="644.0" minWidth="526.0" prefHeight="33.0" prefWidth="526.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Label text="Species File" GridPane.rowIndex="6" />
+                                                <Label text="Number of Threads" GridPane.rowIndex="16" />
+                                                <JFXButton fx:id="btnTaxonomyUpload" buttonType="RAISED" onAction="#btnTaxonomyUpload_clicked" style="-fx-background-color: #009688;" text="Upload" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="4">
                                                    <cursor>
                                                       <Cursor fx:constant="HAND" />
                                                    </cursor></JFXButton>
-                                                <JFXTextField fx:id="txtSpeciesFile" focusColor="#26a69a" maxWidth="644.0" minWidth="526.0" prefHeight="33.0" prefWidth="526.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                <JFXButton fx:id="btnSpeciesUpload" buttonType="RAISED" onAction="#btnSpeciesUpload_clicked" style="-fx-background-color: #009688;" text="Upload" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                                                <JFXTextField fx:id="txtSpeciesFile" focusColor="#26a69a" maxWidth="644.0" minWidth="526.0" prefHeight="33.0" prefWidth="526.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                <JFXButton fx:id="btnSpeciesUpload" buttonType="RAISED" onAction="#btnSpeciesUpload_clicked" style="-fx-background-color: #009688;" text="Upload" textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="6">
                                                    <cursor>
                                                       <Cursor fx:constant="HAND" />
                                                    </cursor></JFXButton>
-                                                <JFXTextField fx:id="txtTaxonomyFile" focusColor="#26a69a" maxWidth="644.0" minWidth="526.0" prefHeight="33.0" prefWidth="526.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <JFXSlider fx:id="sliderThreads" blockIncrement="1.0" majorTickUnit="1.0" max="12.0" min="3.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" value="5.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                                <JFXTextField fx:id="txtTaxonomyFile" focusColor="#26a69a" maxWidth="644.0" minWidth="526.0" prefHeight="33.0" prefWidth="526.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <JFXSlider fx:id="sliderThreads" blockIncrement="1.0" majorTickUnit="1.0" max="12.0" min="3.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" value="5.0" GridPane.columnIndex="1" GridPane.rowIndex="16">
                                                    <GridPane.margin>
                                                       <Insets left="10.0" top="35.0" />
                                                    </GridPane.margin>
                                                 </JFXSlider>
+                                                <Label text="Max e-Value" GridPane.rowIndex="10" />
+                                                <JFXTextField fx:id="txtMaxEValue" focusColor="#26a69a" layoutX="155.0" layoutY="129.0" maxWidth="644.0" minWidth="526.0" prefHeight="33.0" prefWidth="526.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                                                <Label layoutX="10.0" layoutY="197.0" text="BLAST database" GridPane.rowIndex="14" />
+                                                <JFXToggleButton fx:id="tbtnBlastDatabase" text="Online" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+                                                <Label layoutX="10.0" layoutY="17.0" text="Taxonomy File" GridPane.rowIndex="4" />
+                                                <Label layoutX="10.0" layoutY="197.0" text="Max Target Sequences" GridPane.rowIndex="12" />
+                                                <JFXTextField fx:id="txtMaxTargetSeq" focusColor="#26a69a" layoutX="155.0" layoutY="189.0" maxWidth="644.0" minWidth="526.0" prefHeight="33.0" prefWidth="526.0" text="100000" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                                                <Label text="BLAST SETTINGS" GridPane.rowIndex="8">
+                                                   <font>
+                                                      <Font name="System Bold Italic" size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label text="CUSTOM FILES">
+                                                   <font>
+                                                      <Font name="System Bold Italic" size="18.0" />
+                                                   </font>
+                                                </Label>
                                              </children>
                                           </GridPane>
                                        </top>
                                        <bottom>
                                           <BorderPane BorderPane.alignment="CENTER">
                                              <left>
-                                                <JFXButton fx:id="btnMainForm" buttonType="RAISED" style="-fx-background-color: #009688;" text="Main Form" textFill="WHITE" BorderPane.alignment="CENTER">
+                                                <JFXButton fx:id="btnResetDefault" buttonType="RAISED" style="-fx-background-color: #009688;" text="Reset to Defaults" textFill="WHITE" BorderPane.alignment="CENTER">
                                                    <cursor>
                                                       <Cursor fx:constant="HAND" />
                                                    </cursor></JFXButton>
                                              </left>
                                              <right>
-                                                <JFXButton fx:id="btnSaveOverview" buttonType="RAISED" prefHeight="27.0" prefWidth="98.0" style="-fx-background-color: #009688;" text="SAVE" textFill="WHITE" BorderPane.alignment="CENTER">
+                                                <JFXButton fx:id="btnSaveOverview" buttonType="RAISED" prefWidth="100.0" style="-fx-background-color: #009688;" text="SAVE" textFill="WHITE" BorderPane.alignment="CENTER">
                                                    <cursor>
                                                       <Cursor fx:constant="HAND" />
                                                    </cursor></JFXButton>

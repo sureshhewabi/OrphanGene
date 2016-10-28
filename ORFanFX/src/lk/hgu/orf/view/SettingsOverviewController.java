@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXToggleButton;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
@@ -15,6 +16,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Scanner;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -51,9 +54,18 @@ public class SettingsOverviewController implements Initializable {
 
     @FXML
     private JFXSlider sliderThreads;
+    
+      @FXML
+    private JFXTextField txtMaxEValue;
 
     @FXML
-    private JFXButton btnMainForm;
+    private JFXToggleButton tbtnBlastDatabase;
+
+    @FXML
+    private JFXTextField txtMaxTargetSeq;
+
+    @FXML
+    private JFXButton btnResetDefault;
 
     @FXML
     private JFXButton btnSaveOverview;
@@ -132,8 +144,8 @@ public class SettingsOverviewController implements Initializable {
                 System.out.println(sc.next());
             }
             System.out.println("speciesList length : " + speciesList.size());
-//            ObservableList<String> items = FXCollections.observableArrayList(speciesList);
-//            txtSettingSpeciesFrom.setItems(items);
+            ObservableList<String> items = FXCollections.observableArrayList(speciesList);
+            txtSettingSpeciesFrom.setItems(items);
         } catch (IOException e) {
             System.err.println("Setting loading  file error:" + e.getMessage());
         }
@@ -148,22 +160,23 @@ public class SettingsOverviewController implements Initializable {
 
             input = new FileInputStream("config.properties");
 
-            // load a properties file
+            // load the property file
             prop.load(input);
 
-            // get the property value and print it out
-            System.out.println(prop.getProperty("database"));
-            txtDatabaseFile.setText(prop.getProperty("database"));
-            System.out.println(prop.getProperty("species"));
-            txtSpeciesFile.setText(prop.getProperty("species"));
-            System.out.println(prop.getProperty("taxonomy"));
-            txtTaxonomyFile.setText(prop.getProperty("taxonomy"));
+            // Set property values to relevant fields
+            txtDatabaseFile.setText(prop.getProperty("defalt_database"));
+            txtSpeciesFile.setText(prop.getProperty("defalt_species"));
+            txtTaxonomyFile.setText(prop.getProperty("defalt_taxonomy"));
+            txtMaxEValue.setText(prop.getProperty("defalt_maxevalue"));
+            txtMaxTargetSeq.setText(prop.getProperty("defalt_maxtargetseq"));
+            sliderThreads.setValue(Double.parseDouble(prop.getProperty("defalt_threads")));
 
         } catch (IOException ex) {
             System.out.println(" IOError: "+ ex.getMessage());
         } finally {
             if (input != null) {
                 try {
+                    // in the case of unsucceessful attempt, close the input
                     input.close();
                 } catch (IOException e) {
                     System.out.println(" IOError: "+ e.getMessage());
