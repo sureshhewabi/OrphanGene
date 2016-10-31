@@ -1,0 +1,1 @@
+blastp -query /Users/hgu/Documents/Tools/ORFanFinder/Human_chr21p_review/test.fasta -db nr -outfmt 6 -max_target_seqs 10 -evalue 1e-10 -out blastoutput.bl -remote

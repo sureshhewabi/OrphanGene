@@ -136,23 +136,23 @@ public class SettingsOverviewController implements Initializable {
         return selectedFile.getPath();
     }
 
-    private void LoadSpecies() {
-
-        List<String> speciesList = new ArrayList<String>();
-
-        try {
-            Scanner sc = new Scanner(new FileReader("/Users/hgu/NetBeansProjects/OrphanGene/ORFanFX/src/settings/names.txt"));
-            while (sc.hasNextLine()) {
-                speciesList.add(sc.next());
-                System.out.println(sc.next());
-            }
-            System.out.println("speciesList length : " + speciesList.size());
-            ObservableList<String> items = FXCollections.observableArrayList(speciesList);
-            txtSettingSpeciesFrom.setItems(items);
-        } catch (IOException e) {
-            System.err.println("Setting loading  file error:" + e.getMessage());
-        }
-    }
+//    private void LoadSpecies() {
+//
+//        List<String> speciesList = new ArrayList<String>();
+//
+//        try {
+//            Scanner sc = new Scanner(new FileReader("/Users/hgu/NetBeansProjects/OrphanGene/ORFanFX/src/settings/names.txt"));
+//            while (sc.hasNextLine()) {
+//                speciesList.add(sc.next());
+//                System.out.println(sc.next());
+//            }
+//            System.out.println("speciesList length : " + speciesList.size());
+//            ObservableList<String> items = FXCollections.observableArrayList(speciesList);
+//            txtSettingSpeciesFrom.setItems(items);
+//        } catch (IOException e) {
+//            System.err.println("Setting loading  file error:" + e.getMessage());
+//        }
+//    }
 
     private void loadProperties() {
 

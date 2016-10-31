@@ -7,15 +7,11 @@ import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,6 +26,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import lk.hgu.orf.control.Blast;
 import lk.hgu.orf.control.Preprocess;
 import lk.hgu.orf.model.BlastResult;
 import lk.hgu.orf.model.ORFGene;
@@ -175,6 +172,7 @@ public class MainFormController implements Initializable {
     void btnFindOrphanGenes_clicked(ActionEvent event) {
 
         Preprocess prep = new Preprocess();
+        Blast blast = new Blast();
         Map<String, String> settings = new HashMap<>();
 
         // create a ID file for indexing
@@ -192,6 +190,14 @@ public class MainFormController implements Initializable {
         System.out.println("-out blastoutput.bl");
         System.out.println("-num_threads " + settings.get("defalt_threads"));
         System.out.println("-blastMethod " + settings.get("defalt_blastmethod"));
+
+        blast.doBlast(inputFastaFile, 
+                settings.get("defalt_database"), 
+                settings.get("defalt_maxtargetseq"), 
+                settings.get("defalt_maxevalue"), 
+                settings.get("defalt_threads"), 
+                settings.get("defalt_blastmethod")
+        );
     }
 
     void initORFanGeneTable() {

@@ -1,21 +1,21 @@
 #!/usr/bin/env bash
 
-if [ -z "$1" ]
-  then
-    echo "Input file must be specified."
-    echo -e "Usage: extractIdsFromFasta input_file output_file\n \
-	input_file should be in FASTA format."
-    exit;
-fi
-
-if [ -z "$2" ]
-  then
-    echo "Output file must be specified"
-    echo -e "Usage: extractIdsFromFasta input_file output_file\n \
-        input_file should be in FASTA format."
-    exit;
-fi
-
-cd workingdir
-blastp -query chr21_1_13000000_genes.fasta -db uniprotkb_vertebrates_db.fa -outfmt 6 -max_target_seqs 1000000 -evalue 1e-3 -out human_chr21p_v.bl -num_threads 8
-cd ..
+#echo "$8" >> fileName_ab
+# check for any missing input parameters
+#if  [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ] || [ -z "$5" ] || [ -z "$6" ] || [ -z "$7" ] || [ -z "$8" ]then
+#echo "called script" >> fileName_empty
+#echo "Invalid inputs."
+#echo -e "Usage: blastp -query <$1> -db <$2> -outfmt <$3> -max_target_seqs <$4> \
+#    -evalue <$5> -out <$6> -remote"
+#exit;
+#else
+#echo "called script" >> fileName_not_empty
+#if [$8 = "online"] 
+#then
+blastp -query $1 -db nr -outfmt $3 -max_target_seqs $4 -evalue $5 -out $6 -remote 
+echo "blastp -query $1 -db nr -outfmt $3 -max_target_seqs $4 -evalue $5 -out $6 -remote" >> fileName_online 
+#else
+#blastp -query $1 -db $2 -outfmt $3 -max_target_seqs $4 -evalue $5 -out $6 -num_threads $7
+#echo "blastp -query $1 -db $2 -outfmt $3 -max_target_seqs $4 -evalue $5 -out $6 -num_threads $7" >> fileName_offline
+#fi
+#fi
