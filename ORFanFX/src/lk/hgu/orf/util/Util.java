@@ -26,7 +26,7 @@ public class Util {
             // load the property file
             prop.load(input);
 
-            // save settings in hash table
+            // save settings in a hash table
             settings.put("defalt_database", prop.getProperty("defalt_database"));
             settings.put("defalt_species", prop.getProperty("defalt_species"));
             settings.put("defalt_taxonomy", prop.getProperty("defalt_taxonomy"));
@@ -34,6 +34,13 @@ public class Util {
             settings.put("defalt_maxtargetseq", prop.getProperty("defalt_maxtargetseq"));
             settings.put("defalt_threads", prop.getProperty("defalt_threads"));
             settings.put("defalt_blastmethod", prop.getProperty("defalt_blastmethod"));
+            
+            settings.put("blast", prop.getProperty("blast"));
+            settings.put("outputFile", prop.getProperty("outputFile"));
+            settings.put("outfmt", prop.getProperty("outfmt"));
+            
+            settings.put("ORFanFinder", prop.getProperty("ORFanFinder"));
+            
 
         } catch (IOException ex) {
             System.out.println(" IOError: " + ex.getMessage());

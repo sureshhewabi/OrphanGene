@@ -1,2 +1,0 @@
-blastp -query /Users/hgu/NetBeansProjects/OrphanGene/ORFanFX/test/test.fasta -db nr -outfmt 6 -max_target_seqs 10 -evalue 1e-10 -out blastoutput.bl -remote
-blastp -query /Users/hgu/NetBeansProjects/OrphanGene/ORFanFX/test/test.fasta -db nr -outfmt 6 -max_target_seqs 10 -evalue 1e-10 -out blastoutput.bl -remote

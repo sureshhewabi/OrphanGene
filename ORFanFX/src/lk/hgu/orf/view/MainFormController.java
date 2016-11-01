@@ -10,8 +10,6 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,13 +29,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import lk.hgu.orf.control.Blast;
+import lk.hgu.orf.control.ORFan;
 import lk.hgu.orf.control.Preprocess;
 import lk.hgu.orf.model.BlastResult;
 import lk.hgu.orf.model.ORFGene;
 import lk.hgu.orf.model.ORFanGeneOverview;
 import lk.hgu.orf.test.ChartData;
 import lk.hgu.orf.test.TableData;
-import lk.hgu.orf.util.Util;
 
 /**
  *
@@ -131,11 +129,16 @@ public class MainFormController implements Initializable {
 
     private VBox box;
     private HamburgerBackArrowBasicTransition transition;
+    
+    // To load data into data tables
     TableData td = new TableData();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
+
+            progressBar.setVisible(false);
+
             // Initialise side menu
             box = FXMLLoader.load(getClass().getResource("/lk/hgu/orf/view/Menu.fxml"));
             transition = new HamburgerBackArrowBasicTransition(hamburgerSideMenu);
@@ -182,39 +185,32 @@ public class MainFormController implements Initializable {
     void btnFindOrphanGenes_clicked(ActionEvent event) {
 
         Preprocess prep = new Preprocess();
-        Blast blast = new Blast();
-        Map<String, String> settings = new HashMap<>();
+        progressBar.setVisible(true);
 
-        // create a ID file for indexing
-        String inputFastaFile = txtProteinSequence.getText();
-        txtStatusLabel.setText("Creating ID file...");
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(MainFormController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        prep.createIDFile(inputFastaFile);
-
-        // BLAST
-        settings = Util.getSettings();
-        System.out.println("############### BLAST PARAMETERS ################");
-        System.out.println("-query " + inputFastaFile);
-        System.out.println("-db " + settings.get("defalt_database"));
-        System.out.println("-outfmt 6");
-        System.out.println("-max_target_seqs " + settings.get("defalt_maxtargetseq"));
-        System.out.println("-evalue " + settings.get("defalt_maxevalue"));
-        System.out.println("-out blastoutput.bl");
-        System.out.println("-num_threads " + settings.get("defalt_threads"));
-        System.out.println("-blastMethod " + settings.get("defalt_blastmethod"));
-
-         txtStatusLabel.setText("Blasting ...");
-        blast.doBlast(inputFastaFile,
-                settings.get("defalt_database"),
-                settings.get("defalt_maxtargetseq"),
-                settings.get("defalt_maxevalue"),
-                settings.get("defalt_threads"),
-                settings.get("defalt_blastmethod")
-        );
+//        // create a ID file for indexing
+//        String inputFastaFile = txtProteinSequence.getText();
+//        txtStatusLabel.setText("Creating ID file...");
+//        
+//        try {
+//            // thread to sleep for 1000 milliseconds
+//            Thread.sleep(5000);
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(MainFormController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        prep.createIDFile(inputFastaFile);
+//
+//        // BLAST
+//        Blast blast = new Blast(inputFastaFile, "online");
+//        txtStatusLabel.setText("Blasting ...");
+//        blast.doBlast();
+//        progressBar.setVisible(false);
+         
+        // find ORF
+        System.out.println("Finding orphan genes ...");
+        txtStatusLabel.setText("Finding orphan genes ...");
+        ORFan orf = new ORFan();
+        orf.findORFanGenes();
+         txtStatusLabel.setText("Done!");
     }
 
     void initORFanGeneTable() {
@@ -271,20 +267,4 @@ public class MainFormController implements Initializable {
         detailTableTaxLevel.prefWidthProperty().bind(tblBlastHit.widthProperty().multiply(0.35));
         detailTableParentTaxLevel.prefWidthProperty().bind(tblBlastHit.widthProperty().multiply(0.35));
     }
-
-//    private Map<String, String> loadSettings(){
-////        Map<String, String> settings = new HashMap<>();
-////        
-////           settings =  Util.getSettings();
-////    
-////                    // Set property values to relevant fields
-////            txtDatabaseFile.setText(settings.get("defalt_database"));
-////            txtSpeciesFile.setText(settings.get("defalt_species"));
-////            txtTaxonomyFile.setText(settings.get("defalt_taxonomy"));
-////            txtMaxEValue.setText(settings.get("defalt_maxevalue"));
-////            txtMaxTargetSeq.setText(settings.get("defalt_maxtargetseq"));
-////            sliderThreads.setValue(Double.parseDouble(settings.get("defalt_threads")));
-//
-//        return settings;
-//    }
 }
