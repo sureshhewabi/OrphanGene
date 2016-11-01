@@ -31,6 +31,7 @@ import javafx.scene.layout.Pane;
 import lk.hgu.orf.control.Blast;
 import lk.hgu.orf.control.ORFan;
 import lk.hgu.orf.control.Preprocess;
+import lk.hgu.orf.control.Report;
 import lk.hgu.orf.model.BlastResult;
 import lk.hgu.orf.model.ORFGene;
 import lk.hgu.orf.model.ORFanGeneOverview;
@@ -206,11 +207,20 @@ public class MainFormController implements Initializable {
 //        progressBar.setVisible(false);
          
         // find ORF
-        System.out.println("Finding orphan genes ...");
-        txtStatusLabel.setText("Finding orphan genes ...");
-        ORFan orf = new ORFan();
-        orf.findORFanGenes();
-         txtStatusLabel.setText("Done!");
+//        System.out.println("Finding orphan genes ...");
+//        txtStatusLabel.setText("Finding orphan genes ...");
+//        ORFan orf = new ORFan();
+//        orf.findORFanGenes();
+//         txtStatusLabel.setText("Done!");
+         
+         // report
+         Report report = new Report();
+        try {
+            report.readOutputFile();
+        } catch (IOException ex) {
+            System.err.println("Error: " + ex.getMessage());
+            Logger.getLogger(MainFormController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     void initORFanGeneTable() {
