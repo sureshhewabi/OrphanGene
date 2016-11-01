@@ -4,7 +4,7 @@ import java.io.IOException;
 
 /**
  * This is the controller class which executes the Blast script as a subprocess
- * 
+ *
  * @author Suresh Hewapathirana
  */
 public class Blast {
@@ -32,27 +32,24 @@ public class Blast {
      */
     public void doBlast(String query, String db, String max_target_seqs, String evalue, String num_threads, String blastMethod) {
 
+        Runtime rt = Runtime.getRuntime();
+        String[] command = {"/usr/local/ncbi/blast/bin/blastp",
+            "-query", query, "-db", db, "-outfmt", outfmt, "max_target_seqs", max_target_seqs,
+            "-evalue", evalue, "-out", outputFile, "-remote"};
         try {
-            
-            // build the process
-            ProcessBuilder pb = new ProcessBuilder(blast,
-                    query, db, outfmt, max_target_seqs,
-                    evalue, outputFile, num_threads, blastMethod);
-            
-            // start the process
-            Process p = pb.start();
 
-            // cause this process to stop until process p is terminated
-            //p.waitFor();
-            if(p.waitFor()!=0) throw new RuntimeException("error occured");
+            Process p = rt.exec("/usr/local/ncbi/blast/bin/blastp -query ./workingdir/test.fasta -db nr -outfmt 6 -max_target_seqs 10 -evalue 1e-10 -out ./workingdir/blastoutput_fromjava.bl -remote");
+
+            if (p.waitFor() != 0) {
+                throw new RuntimeException("Blast error occured");
+            } else {
+                System.out.println("Blast successfully Completed!!");
+            }
             
-            // done
-            System.out.println("Blast Completed!!");
         } catch (IOException ex) {
             System.err.println("IOError: " + ex.getMessage());
         } catch (InterruptedException ex) {
             System.err.println("InterruptedException: " + ex.getMessage());
         }
     }
-
 }

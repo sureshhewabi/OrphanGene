@@ -4,14 +4,17 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXHamburger?>
+<?import com.jfoenix.controls.JFXProgressBar?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToolbar?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -273,6 +276,20 @@
                </children>
             </VBox>
          </center>
+         <bottom>
+            <JFXToolbar BorderPane.alignment="CENTER">
+               <left>
+                  <Label fx:id="txtStatusLabel" text="Label" BorderPane.alignment="CENTER">
+                     <padding>
+                        <Insets right="10.0" top="10.0" />
+                     </padding>
+                  </Label>
+               </left>
+               <right>
+                  <JFXProgressBar fx:id="progressBar" BorderPane.alignment="CENTER" />
+               </right>
+            </JFXToolbar>
+         </bottom>
       </BorderPane>
    </children>
 </AnchorPane>

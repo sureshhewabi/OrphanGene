@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 
 import com.jfoenix.controls.JFXHamburger;
+import com.jfoenix.controls.JFXProgressBar;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
@@ -12,6 +13,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +23,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.TableColumn;
@@ -119,6 +123,12 @@ public class MainFormController implements Initializable {
     @FXML
     private TableColumn<BlastResult, String> detailTableParentTaxLevel;
 
+    @FXML
+    private Label txtStatusLabel;
+
+    @FXML
+    private JFXProgressBar progressBar;
+
     private VBox box;
     private HamburgerBackArrowBasicTransition transition;
     TableData td = new TableData();
@@ -177,6 +187,12 @@ public class MainFormController implements Initializable {
 
         // create a ID file for indexing
         String inputFastaFile = txtProteinSequence.getText();
+        txtStatusLabel.setText("Creating ID file...");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(MainFormController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         prep.createIDFile(inputFastaFile);
 
         // BLAST
@@ -191,11 +207,12 @@ public class MainFormController implements Initializable {
         System.out.println("-num_threads " + settings.get("defalt_threads"));
         System.out.println("-blastMethod " + settings.get("defalt_blastmethod"));
 
-        blast.doBlast(inputFastaFile, 
-                settings.get("defalt_database"), 
-                settings.get("defalt_maxtargetseq"), 
-                settings.get("defalt_maxevalue"), 
-                settings.get("defalt_threads"), 
+         txtStatusLabel.setText("Blasting ...");
+        blast.doBlast(inputFastaFile,
+                settings.get("defalt_database"),
+                settings.get("defalt_maxtargetseq"),
+                settings.get("defalt_maxevalue"),
+                settings.get("defalt_threads"),
                 settings.get("defalt_blastmethod")
         );
     }
