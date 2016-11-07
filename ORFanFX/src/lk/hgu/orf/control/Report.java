@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import lk.hgu.orf.model.BlastResult;
 import lk.hgu.orf.model.ORFGene;
 import lk.hgu.orf.model.ORFanGeneOverview;
 import lk.hgu.orf.util.Util;
@@ -19,6 +20,19 @@ public class Report {
 
     ObservableList<ORFGene> ORFGeneList = FXCollections.observableArrayList();
     ObservableList<ORFanGeneOverview> ORFanGeneOverviewList = FXCollections.observableArrayList();
+    ObservableList<BlastResult> blastResultList = FXCollections.observableArrayList();
+
+    public ObservableList<ORFGene> getORFGeneList() {
+        return ORFGeneList;
+    }
+
+    public ObservableList<ORFanGeneOverview> getORFanGeneOverviewList() {
+        return ORFanGeneOverviewList;
+    }
+
+    public ObservableList<BlastResult> getBlastResultList() {
+        return blastResultList;
+    }
 
     public void readOutputFile() throws IOException {
 
@@ -69,12 +83,12 @@ public class Report {
 
             // copy summary data to the summary object
             for (Map.Entry<String, Integer> row : summary.entrySet()) {
-                
+
                 System.out.println(row.getKey() + " | " + row.getValue());
-                
+
                 // add each record(ophan gene level and the number of orphan genes) to the list
                 ORFanGeneOverviewList.add(new ORFanGeneOverview(row.getKey(), row.getValue()));
-                
+
                 // calculate total number of ophan genes
                 totalOphanGenes += row.getValue();
             }

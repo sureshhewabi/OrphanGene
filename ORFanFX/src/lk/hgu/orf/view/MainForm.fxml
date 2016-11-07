@@ -271,11 +271,11 @@
             </VBox>
          </center>
          <bottom>
-            <JFXToolbar BorderPane.alignment="CENTER">
+            <JFXToolbar style="-fx-background-color: #e0e0e0;" BorderPane.alignment="CENTER">
                <left>
-                  <Label fx:id="txtStatusLabel" text="Label" BorderPane.alignment="CENTER">
+                  <Label fx:id="txtStatusLabel" text="Status:" BorderPane.alignment="CENTER">
                      <padding>
-                        <Insets right="10.0" top="10.0" />
+                        <Insets bottom="5.0" left="20.0" top="5.0" />
                      </padding>
                   </Label>
                </left>
@@ -283,8 +283,11 @@
                   <JFXProgressBar fx:id="progressBar" BorderPane.alignment="CENTER" />
                </right>
                <BorderPane.margin>
-                  <Insets right="40.0" />
+                  <Insets />
                </BorderPane.margin>
+               <padding>
+                  <Insets right="40.0" />
+               </padding>
             </JFXToolbar>
          </bottom>
       </BorderPane>

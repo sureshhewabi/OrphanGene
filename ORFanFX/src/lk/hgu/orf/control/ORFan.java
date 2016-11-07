@@ -40,6 +40,7 @@ public class ORFan {
     }
     
     public void findORFanGenes(){
+        
          Runtime rt = Runtime.getRuntime();
         try {
             System.out.println("ORF Command: " + command);
