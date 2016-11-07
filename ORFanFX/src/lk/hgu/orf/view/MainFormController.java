@@ -143,6 +143,7 @@ public class MainFormController implements Initializable {
 
     private VBox box;
     private HamburgerBackArrowBasicTransition transition;
+    AutoCompleteTextField autotxtOrganism;
 
     // To load data into data tables
     TableData td = new TableData();
@@ -175,7 +176,7 @@ public class MainFormController implements Initializable {
             Data data = new Data();
 
             //CustomControl
-            AutoCompleteTextField autotxtOrganism = new AutoCompleteTextField();
+            autotxtOrganism = new AutoCompleteTextField();
             autotxtOrganism.setFocusColor(txtProteinSequence.getFocusColor());
             autotxtOrganism.setPromptText("Organism");
             autotxtOrganism.prefWidthProperty().bind(hboxtxtOganism.widthProperty().multiply(0.9));
@@ -242,36 +243,38 @@ public class MainFormController implements Initializable {
 
         Preprocess prep = new Preprocess();
         progressBar.setVisible(true);
+        
+        String organismTaxonomyID = autotxtOrganism.getText().split("[\\(\\)]")[1];
 
-        try {
-            // Step 1 - Save input sequence as a fasta file
-            txtStatusLabel.setText("Saving input sequence...");
-            prep.saveInputSequence(txtProteinSequence.getText());
-
-            // Step 2 - create a ID file for indexing
-            txtStatusLabel.setText("Creating ID file...");
-            File inputFastaFile = new File("./workingdir/input.fasta");
-            System.out.println("Input Sequence file : " + inputFastaFile.getAbsolutePath());
-            prep.createIDFile(inputFastaFile.getAbsolutePath());
-
-            // Step 3 - BLAST
-            txtStatusLabel.setText("Blasting ...");
-            Blast blast = new Blast(inputFastaFile.getAbsolutePath(), "online");
-            blast.doBlast();
-            progressBar.setVisible(false);
-
-            // Step 4 - find Orphan Genes
-            txtStatusLabel.setText("Finding orphan genes ...");
-            ORFan orf = new ORFan();
-            orf.findORFanGenes();
-
-            // Step 5 - Report results
-            Report report = new Report();
-            report.readOutputFile();
-            
-        } catch (IOException ex) {
-            System.err.println("Error: " + ex.getMessage());
-        }
+//        try {
+//            // Step 1 - Save input sequence as a fasta file
+//            txtStatusLabel.setText("Saving input sequence...");
+//            prep.saveInputSequence(txtProteinSequence.getText());
+//
+//            // Step 2 - create a ID file for indexing
+//            txtStatusLabel.setText("Creating ID file...");
+//            File inputFastaFile = new File("./workingdir/input.fasta");
+//            System.out.println("Input Sequence file : " + inputFastaFile.getAbsolutePath());
+//            prep.createIDFile(inputFastaFile.getAbsolutePath());
+//
+//            // Step 3 - BLAST
+//            txtStatusLabel.setText("Blasting ...");
+//            Blast blast = new Blast(inputFastaFile.getAbsolutePath(), "online");
+//            blast.doBlast();
+//            progressBar.setVisible(false);
+//
+//            // Step 4 - find Orphan Genes
+//            txtStatusLabel.setText("Finding orphan genes ...");
+//            ORFan orf = new ORFan(organismTaxonomyID);
+//            orf.findORFanGenes();
+//
+//            // Step 5 - Report results
+//            Report report = new Report();
+//            report.readOutputFile();
+//            
+//        } catch (IOException ex) {
+//            System.err.println("Error: " + ex.getMessage());
+//        }
     }
 
     void initORFanGeneTable() {

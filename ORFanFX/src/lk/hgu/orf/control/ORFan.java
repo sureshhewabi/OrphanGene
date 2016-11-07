@@ -14,7 +14,7 @@ public class ORFan {
      // ORFan command
     private String command = "";
 
-    public ORFan() {
+    public ORFan(String organismTaxonomyID) {
         
          Map<String, String> settings = Util.getSettings();
          
@@ -34,7 +34,7 @@ public class ORFan {
                 " -nodes ./workingdir/nodes.txt" + 
                 " -names ./workingdir/names.txt" + 
                 " -db /Users/hgu/Documents/Tools/ORFanFinder/ORFanFinder-1.1.2/databases/uniBacteria.hdb" +
-                " -tax 511145" + 
+                " -tax " + organismTaxonomyID +  
                 " -threads " + settings.get("defalt_threads") +
                 " -out " + settings.get("ORFan_outputfile");       
     }
