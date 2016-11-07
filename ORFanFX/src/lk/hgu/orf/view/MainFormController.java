@@ -8,11 +8,11 @@ import com.jfoenix.controls.JFXProgressBar;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,14 +29,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
+import lk.hgu.orf.control.Blast;
+import lk.hgu.orf.control.ORFan;
 import lk.hgu.orf.control.Preprocess;
 import lk.hgu.orf.control.Report;
 import lk.hgu.orf.model.BlastResult;
@@ -148,7 +150,6 @@ public class MainFormController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-
             progressBar.setVisible(false);
 
             // Initialise side menu
@@ -187,18 +188,16 @@ public class MainFormController implements Initializable {
         } catch (IOException e) {
             System.err.println("Error at MainFormController Init: " + e.getMessage());
         }
-        
-//         txtProteinSequence.setOnDragOver(new EventHandler<DragEvent>() {  
-//  
-//            @Override  
-//            public void handle(DragEvent event) {  
-//                if (event.getDragboard().hasFiles()) {  
-//                    event.acceptTransferModes(TransferMode.COPY_OR_MOVE);  
-//                }  
-//            }  
-//        });  
-  
-  
+
+        txtProteinSequence.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.equals("")) {
+                btnFindOrphanGenes.setDisable(true);
+                txtStatusLabel.setText("Enter a protein sequence!");
+            } else {
+                btnFindOrphanGenes.setDisable(false);
+            }
+        });
+        btnFindOrphanGenes.setDisable(true);
     }
 
     @FXML
@@ -217,25 +216,25 @@ public class MainFormController implements Initializable {
             drawer.open();
         }
     }
-    
-      @FXML
+
+    @FXML
     void txtProteinSequence_OnDragDragOver(DragEvent event) {
-         if (event.getDragboard().hasFiles()) {  
-                    event.acceptTransferModes(TransferMode.COPY_OR_MOVE);  
-                }  
+        if (event.getDragboard().hasFiles()) {
+            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
     }
-    
-      @FXML
+
+    @FXML
     void txtProteinSequence_OnDragDropped(DragEvent event) {
-        final Dragboard dragboard = event.getDragboard();  
-                if (dragboard.hasFiles()) {  
-                    Path file = dragboard.getFiles().get(0).toPath();  
-                    try {  
-                        txtProteinSequence.setText(new String(Files.readAllBytes(file)));  
-                    } catch (IOException e) {  
-                        e.printStackTrace();  
-                    }  
-                }  
+        final Dragboard dragboard = event.getDragboard();
+        if (dragboard.hasFiles()) {
+            Path file = dragboard.getFiles().get(0).toPath();
+            try {
+                txtProteinSequence.setText(new String(Files.readAllBytes(file)));
+            } catch (IOException e) {
+                System.err.println("Error : " + e.getMessage());
+            }
+        }
     }
 
     @FXML
@@ -244,36 +243,34 @@ public class MainFormController implements Initializable {
         Preprocess prep = new Preprocess();
         progressBar.setVisible(true);
 
-//        // create a ID file for indexing
-//        String inputFastaFile = txtProteinSequence.getText();
-//        txtStatusLabel.setText("Creating ID file...");
-//        
-//        try {
-//            // thread to sleep for 1000 milliseconds
-//            Thread.sleep(5000);
-//        } catch (InterruptedException ex) {
-//            Logger.getLogger(MainFormController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        prep.createIDFile(inputFastaFile);
-//
-//        // BLAST
-//        Blast blast = new Blast(inputFastaFile, "online");
-//        txtStatusLabel.setText("Blasting ...");
-//        blast.doBlast();
-//        progressBar.setVisible(false);
-        // find ORF
-//        System.out.println("Finding orphan genes ...");
-//        txtStatusLabel.setText("Finding orphan genes ...");
-//        ORFan orf = new ORFan();
-//        orf.findORFanGenes();
-//         txtStatusLabel.setText("Done!");
-        // report
-        Report report = new Report();
         try {
+            // Step 1 - Save input sequence as a fasta file
+            txtStatusLabel.setText("Saving input sequence...");
+            prep.saveInputSequence(txtProteinSequence.getText());
+
+            // Step 2 - create a ID file for indexing
+            txtStatusLabel.setText("Creating ID file...");
+            File inputFastaFile = new File("./workingdir/input.fasta");
+            System.out.println("Input Sequence file : " + inputFastaFile.getAbsolutePath());
+            prep.createIDFile(inputFastaFile.getAbsolutePath());
+
+            // Step 3 - BLAST
+            txtStatusLabel.setText("Blasting ...");
+            Blast blast = new Blast(inputFastaFile.getAbsolutePath(), "online");
+            blast.doBlast();
+            progressBar.setVisible(false);
+
+            // Step 4 - find Orphan Genes
+            txtStatusLabel.setText("Finding orphan genes ...");
+            ORFan orf = new ORFan();
+            orf.findORFanGenes();
+
+            // Step 5 - Report results
+            Report report = new Report();
             report.readOutputFile();
+            
         } catch (IOException ex) {
             System.err.println("Error: " + ex.getMessage());
-            Logger.getLogger(MainFormController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -1,6 +1,8 @@
-
 package lk.hgu.orf.control;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,4 +30,25 @@ public class Preprocess {
         }
     }
 
+    public void saveInputSequence(String content) {
+
+        try {
+            File file = new File("./workingdir/input.fasta");
+
+            // if file doesnt exists, then create it
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(content);
+            bw.close();
+
+            System.out.println("Input sequence saved in the working directory");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
