@@ -36,7 +36,7 @@ public class ORFan {
                 " -db /Users/hgu/Documents/Tools/ORFanFinder/ORFanFinder-1.1.2/databases/uniBacteria.hdb" +
                 " -tax 511145" + 
                 " -threads " + settings.get("defalt_threads") +
-                " -out ./workingdir/orfanResults.csv";       
+                " -out " + settings.get("ORFan_outputfile");       
     }
     
     public void findORFanGenes(){

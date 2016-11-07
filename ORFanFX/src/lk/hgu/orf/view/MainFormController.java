@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,15 +28,17 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import lk.hgu.orf.control.Blast;
-import lk.hgu.orf.control.ORFan;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import lk.hgu.orf.control.Preprocess;
 import lk.hgu.orf.control.Report;
 import lk.hgu.orf.model.BlastResult;
 import lk.hgu.orf.model.ORFGene;
 import lk.hgu.orf.model.ORFanGeneOverview;
 import lk.hgu.orf.test.ChartData;
+import lk.hgu.orf.test.Data;
 import lk.hgu.orf.test.TableData;
 
 /**
@@ -128,9 +131,12 @@ public class MainFormController implements Initializable {
     @FXML
     private JFXProgressBar progressBar;
 
+    @FXML
+    private HBox hboxtxtOganism;
+
     private VBox box;
     private HamburgerBackArrowBasicTransition transition;
-    
+
     // To load data into data tables
     TableData td = new TableData();
 
@@ -159,6 +165,21 @@ public class MainFormController implements Initializable {
             // set width for tables
             initTableWidths();
 
+            // load species
+            Data data = new Data();
+
+            //CustomControl
+            AutoCompleteTextField autotxtOrganism = new AutoCompleteTextField();
+            autotxtOrganism.setFocusColor(txtProteinSequence.getFocusColor());
+            autotxtOrganism.setPromptText("Organism");
+            autotxtOrganism.prefWidthProperty().bind(hboxtxtOganism.widthProperty().multiply(0.9));
+            autotxtOrganism.setLabelFloat(true);
+            autotxtOrganism.getEntries().addAll(data.getOranisms());
+
+            // final AutoFillTextBox box = new AutoFillTextBox(data.getOranisms());/
+            hboxtxtOganism.getChildren().addAll(autotxtOrganism);
+
+            
             // Drag and Drop
         } catch (IOException e) {
             System.err.println("Error at MainFormController Init: " + e.getMessage());
@@ -205,16 +226,14 @@ public class MainFormController implements Initializable {
 //        txtStatusLabel.setText("Blasting ...");
 //        blast.doBlast();
 //        progressBar.setVisible(false);
-         
         // find ORF
 //        System.out.println("Finding orphan genes ...");
 //        txtStatusLabel.setText("Finding orphan genes ...");
 //        ORFan orf = new ORFan();
 //        orf.findORFanGenes();
 //         txtStatusLabel.setText("Done!");
-         
-         // report
-         Report report = new Report();
+        // report
+        Report report = new Report();
         try {
             report.readOutputFile();
         } catch (IOException ex) {

@@ -40,6 +40,7 @@ public class Util {
             settings.put("outfmt", prop.getProperty("outfmt"));
             
             settings.put("ORFanFinder", prop.getProperty("ORFanFinder"));
+            settings.put("ORFan_outputfile", prop.getProperty("ORFan_outputfile"));
             
 
         } catch (IOException ex) {

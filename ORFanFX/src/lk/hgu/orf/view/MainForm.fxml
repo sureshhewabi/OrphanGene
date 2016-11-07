@@ -26,6 +26,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
@@ -92,26 +93,19 @@
                                              </rowConstraints>
                                              <children>
                                                 <BorderPane prefHeight="200.0" prefWidth="200.0">
-                                                   <center>
-                                                      <JFXTextField focusColor="#26a69a" labelFloat="true" promptText="Organism" BorderPane.alignment="TOP_LEFT">
-                                                         <BorderPane.margin>
-                                                            <Insets />
-                                                         </BorderPane.margin>
-                                                         <padding>
-                                                            <Insets left="20.0" />
-                                                         </padding>
-                                                      </JFXTextField>
-                                                   </center>
                                                    <bottom>
                                                       <Hyperlink text="Show an Example" BorderPane.alignment="TOP_LEFT">
-                                                         <padding>
-                                                            <Insets left="20.0" />
-                                                         </padding>
                                                          <BorderPane.margin>
-                                                            <Insets top="20.0" />
+                                                            <Insets left="20.0" top="20.0" />
                                                          </BorderPane.margin>
                                                       </Hyperlink>
                                                    </bottom>
+                                                   <center>
+                                                      <HBox fx:id="hboxtxtOganism" BorderPane.alignment="CENTER">
+                                                         <padding>
+                                                            <Insets left="20.0" right="20.0" />
+                                                         </padding></HBox>
+                                                   </center>
                                                 </BorderPane>
                                                 <BorderPane GridPane.columnIndex="1">
                                                    <center>
@@ -288,6 +282,9 @@
                <right>
                   <JFXProgressBar fx:id="progressBar" BorderPane.alignment="CENTER" />
                </right>
+               <BorderPane.margin>
+                  <Insets right="40.0" />
+               </BorderPane.margin>
             </JFXToolbar>
          </bottom>
       </BorderPane>
