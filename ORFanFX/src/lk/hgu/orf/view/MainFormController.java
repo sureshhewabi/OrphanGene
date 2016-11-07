@@ -10,6 +10,8 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -28,6 +30,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -179,11 +184,21 @@ public class MainFormController implements Initializable {
             // final AutoFillTextBox box = new AutoFillTextBox(data.getOranisms());/
             hboxtxtOganism.getChildren().addAll(autotxtOrganism);
 
-            
-            // Drag and Drop
         } catch (IOException e) {
             System.err.println("Error at MainFormController Init: " + e.getMessage());
         }
+        
+//         txtProteinSequence.setOnDragOver(new EventHandler<DragEvent>() {  
+//  
+//            @Override  
+//            public void handle(DragEvent event) {  
+//                if (event.getDragboard().hasFiles()) {  
+//                    event.acceptTransferModes(TransferMode.COPY_OR_MOVE);  
+//                }  
+//            }  
+//        });  
+  
+  
     }
 
     @FXML
@@ -201,6 +216,26 @@ public class MainFormController implements Initializable {
         } else {
             drawer.open();
         }
+    }
+    
+      @FXML
+    void txtProteinSequence_OnDragDragOver(DragEvent event) {
+         if (event.getDragboard().hasFiles()) {  
+                    event.acceptTransferModes(TransferMode.COPY_OR_MOVE);  
+                }  
+    }
+    
+      @FXML
+    void txtProteinSequence_OnDragDropped(DragEvent event) {
+        final Dragboard dragboard = event.getDragboard();  
+                if (dragboard.hasFiles()) {  
+                    Path file = dragboard.getFiles().get(0).toPath();  
+                    try {  
+                        txtProteinSequence.setText(new String(Files.readAllBytes(file)));  
+                    } catch (IOException e) {  
+                        e.printStackTrace();  
+                    }  
+                }  
     }
 
     @FXML

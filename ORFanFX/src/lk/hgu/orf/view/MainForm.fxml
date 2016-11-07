@@ -70,7 +70,7 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <JFXTextArea fx:id="txtProteinSequence" focusColor="#26a69a" labelFloat="true" promptText="Protein Sequence " style="-fx-border-color: #555555;" wrapText="true">
+                                    <JFXTextArea fx:id="txtProteinSequence" focusColor="#26a69a" labelFloat="true" onDragDropped="#txtProteinSequence_OnDragDropped" onDragOver="#txtProteinSequence_OnDragDragOver" promptText="Protein Sequence " style="-fx-border-color: #555555;" wrapText="true">
                                        <GridPane.margin>
                                           <Insets bottom="10.0" left="20.0" right="20.0" top="40.0" />
                                        </GridPane.margin>
