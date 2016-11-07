@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.chart.XYChart;
 import lk.hgu.orf.model.BlastResult;
 import lk.hgu.orf.model.ORFGene;
 import lk.hgu.orf.model.ORFanGeneOverview;
@@ -18,9 +19,10 @@ import lk.hgu.orf.util.Util;
  */
 public class Report {
 
-    ObservableList<ORFGene> ORFGeneList = FXCollections.observableArrayList();
-    ObservableList<ORFanGeneOverview> ORFanGeneOverviewList = FXCollections.observableArrayList();
-    ObservableList<BlastResult> blastResultList = FXCollections.observableArrayList();
+    private ObservableList<ORFGene> ORFGeneList = FXCollections.observableArrayList();
+    private ObservableList<ORFanGeneOverview> ORFanGeneOverviewList = FXCollections.observableArrayList();
+    private ObservableList<BlastResult> blastResultList = FXCollections.observableArrayList();
+    private XYChart.Series<String, Number> seriesBlastHit;
 
     public ObservableList<ORFGene> getORFGeneList() {
         return ORFGeneList;
@@ -31,6 +33,7 @@ public class Report {
     }
 
     public ObservableList<BlastResult> getBlastResultList() {
+        System.out.println(blastResultList.size());
         return blastResultList;
     }
 
@@ -54,16 +57,17 @@ public class Report {
                 // split line by tab to get each column of the raw
                 String[] columns = line.split("\t");
 
-                System.out.println("Gene ID:" + columns[0]);
+                // System.out.println("Gene ID:" + columns[0]);
                 // first column contains the Gene ID
                 String geneID = columns[0];
 
-                System.out.println("columns[1]:" + columns[1]);
+                //System.out.println("columns[1]:" + columns[1]);
                 if (columns[1].contains("-")) {
                     // split second column to get ORF Gene Level and the Taxonomy Level
                     secondColumn = columns[1].split(" - ");
-                } else {
-                    secondColumn = new String[]{columns[1], "NA"};
+                    extractBlastHits(columns);
+                } else { // strict ORFan does not have taxonomy or any other details
+                    secondColumn = new String[]{columns[1], ""};
                 }
 
                 // copy all the data to the ORFGene object
@@ -94,6 +98,42 @@ public class Report {
             }
             // add total line as the last record
             ORFanGeneOverviewList.add(new ORFanGeneOverview("Total", totalOphanGenes));
+        }
+    }
+
+    private void extractBlastHits(String[] columns) {
+
+        String rankName = "NA";
+        int rankCount = 0;
+        
+        seriesBlastHit = new XYChart.Series<>();
+        seriesBlastHit.setName("Matching hits");
+
+        //System.out.println("-----------------" + columns[1] + "------------------");
+        for (int i = 2; i < columns.length; i++) {
+            String column = columns[i];
+           // System.out.println(column);
+            String rankCountRecord = column.split("[\\[\\]]")[1];
+
+            if (rankCountRecord.split(",").length >= 2) {
+                rankName = rankCountRecord.split(",")[0];
+                rankCount = Integer.parseInt(rankCountRecord.split(",")[1]);
+                seriesBlastHit.getData().add(new XYChart.Data<String, Number>(rankName, rankCount));
+            }
+            
+            String taxonomyDetails = column.split("[\\[\\]]")[2];
+            String[] taxList = taxonomyDetails.split(",");
+            for (int j = 0; j < taxList.length; j++) {
+                String tax = taxList[j];
+               // System.out.println("Tax : " + tax);
+                
+                if (tax.split("[\\(\\)]").length >= 2) {
+                    String taxomomy = tax.split("[\\(\\)]")[0];
+                    String parentTaxomomy = tax.split("[\\(\\)]")[1];
+                    this.blastResultList.add(new BlastResult(i-1, rankName, taxomomy, parentTaxomomy));
+                    
+                }
+            }
         }
     }
 }

@@ -42,11 +42,7 @@ public class ChartData {
 //        // Define data
         String[] levels = {"Phylum", "Class", "Order", "Family", "Genus", "Species", "Subspecies"};
         Number[] hits = {3, 4, 16, 19, 41, 132, 430};
-//
-//        // setup chart
-//        xAxisBlast.setCategories(FXCollections.<String>observableArrayList(Arrays.asList(levels)));
 
-//        // add starting data
         XYChart.Series<String, Number> series2 = new XYChart.Series<>();
         series2.setName("Matching hits");
 
