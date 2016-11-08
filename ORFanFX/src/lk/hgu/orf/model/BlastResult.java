@@ -11,12 +11,14 @@ import javafx.beans.property.SimpleStringProperty;
 public class BlastResult {
     
     private final SimpleIntegerProperty detailTableId;
+    private final SimpleStringProperty detailTableGene;
     private final SimpleStringProperty detailTableRankName;
     private final SimpleStringProperty detailTableTaxLevel;
     private final SimpleStringProperty detailTableParentTaxLevel;
 
-    public BlastResult(Integer detailTableId, String detailTableRankName, String detailTableTaxLevel, String detailTableParentTaxLevel) {
+    public BlastResult(Integer detailTableId, String detailTableGene, String detailTableRankName, String detailTableTaxLevel, String detailTableParentTaxLevel) {
         this.detailTableId = new SimpleIntegerProperty(detailTableId);
+        this.detailTableGene = new SimpleStringProperty(detailTableGene);
         this.detailTableRankName = new SimpleStringProperty(detailTableRankName);
         this.detailTableTaxLevel = new SimpleStringProperty(detailTableTaxLevel);
         this.detailTableParentTaxLevel = new SimpleStringProperty(detailTableParentTaxLevel);
@@ -29,6 +31,13 @@ public class BlastResult {
         return detailTableId.get();
     }
 
+       /**
+     * @return the detailTableGene
+     */
+    public String getDetailTableGene() {
+        return detailTableGene.get();
+    }
+    
     /**
      * @return the detailTableRankName
      */
@@ -52,6 +61,10 @@ public class BlastResult {
 
     @Override
     public String toString() {
-        return "BlastResult{" + "detailTableId=" + detailTableId + ", detailTableRankName=" + detailTableRankName + ", detailTableTaxLevel=" + detailTableTaxLevel + ", detailTableParentTaxLevel=" + detailTableParentTaxLevel + '}';
+        return "BlastResult{" + "detailTableId=" + detailTableId + ", detailTableGene=" + detailTableGene + ", detailTableRankName=" + detailTableRankName + ", detailTableTaxLevel=" + detailTableTaxLevel + ", detailTableParentTaxLevel=" + detailTableParentTaxLevel + '}';
     }
+
+    
+
+ 
 }

@@ -42,7 +42,6 @@ public class Report {
     }
 
     public ObservableList<BlastResult> getBlastResultList() {
-        System.out.println(blastResultList.size());
         return blastResultList;
     }
 
@@ -136,13 +135,11 @@ public class Report {
             String[] taxList = taxonomyDetails.split(",");
             for (int j = 0; j < taxList.length; j++) {
                 String tax = taxList[j];
-                // System.out.println("Tax : " + tax);
 
                 if (tax.split("[\\(\\)]").length >= 2) {
                     String taxomomy = tax.split("[\\(\\)]")[0];
                     String parentTaxomomy = tax.split("[\\(\\)]")[1];
-                    this.blastResultList.add(new BlastResult(i - 1, rankName, taxomomy, parentTaxomomy));
-
+                    this.blastResultList.add(new BlastResult(i - 1, columns[0],rankName, taxomomy, parentTaxomomy));
                 }
             }
         }

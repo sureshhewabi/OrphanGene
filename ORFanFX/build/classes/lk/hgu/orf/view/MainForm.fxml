@@ -249,6 +249,7 @@
                                                 <TableView fx:id="tblBlastHit" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                                   <columns>
                                                     <TableColumn fx:id="detailTableId" prefWidth="93.0" text="No" />
+                                                      <TableColumn fx:id="detailTableGene" prefWidth="75.0" text="Gene" />
                                                     <TableColumn fx:id="detailTableRankName" prefWidth="132.0" text="Rank Name" />
                                                       <TableColumn fx:id="detailTableTaxLevel" minWidth="0.0" prefWidth="216.0" text="Taxonomy Level" />
                                                       <TableColumn fx:id="detailTableParentTaxLevel" minWidth="0.0" prefWidth="225.0" text="Parent Taxonomy Level" />

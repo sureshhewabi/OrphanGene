@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,6 +30,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -128,6 +131,9 @@ public class MainFormController implements Initializable {
     private TableColumn<BlastResult, Integer> detailTableId;
 
     @FXML
+    private TableColumn<BlastResult, String> detailTableGene;
+
+    @FXML
     private TableColumn<BlastResult, String> detailTableRankName;
 
     @FXML
@@ -148,6 +154,7 @@ public class MainFormController implements Initializable {
     private VBox box;
     private HamburgerBackArrowBasicTransition transition;
     AutoCompleteTextField autotxtOrganism;
+    Report report = new Report();
 
     // To load data into data tables
     TableData td = new TableData();
@@ -268,7 +275,6 @@ public class MainFormController implements Initializable {
 //            orf.findORFanGenes();
 
             // Step 5 - Report results
-            Report report = new Report();
             report.readOutputFile();
 
             // update tables with results
@@ -289,11 +295,24 @@ public class MainFormController implements Initializable {
                 }
             });
 
+            tblOrphanGenes.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+                @Override
+                public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
+                    //Check whether item is selected and set value of selected item to Label
+                    if (tblOrphanGenes.getSelectionModel().getSelectedItem() != null) {
+                        ORFGene record = tblOrphanGenes.getSelectionModel().getSelectedItem();
+                        System.out.println(record.getGeneId());
+                        updateBlastHitsBySelectedGene(report.getBlastResultList(), record.getGeneId());
+                    }
+                }
+            });
+
             filterBlastHitsTable(report.getBlastResultList());
 
             // fill chart with data
             chartOverview.getData().add(report.getSeriesOverview());
-            chartBlastHit.getData().add(report.getSeriesBlastHit());
+
+//            chartBlastHit.getData().add(cd.getBlastChartData());
 
         } catch (IOException ex) {
             System.err.println("Error: " + ex.getMessage());
@@ -321,6 +340,7 @@ public class MainFormController implements Initializable {
     void initBlastResultsTable(ObservableList<BlastResult> data) {
 
         detailTableId.setCellValueFactory(new PropertyValueFactory<>("detailTableId"));
+        detailTableGene.setCellValueFactory(new PropertyValueFactory<>("detailTableGene"));
         detailTableRankName.setCellValueFactory(new PropertyValueFactory<>("detailTableRankName"));
         detailTableTaxLevel.setCellValueFactory(new PropertyValueFactory<>("detailTableTaxLevel"));
         detailTableParentTaxLevel.setCellValueFactory(new PropertyValueFactory<>("detailTableParentTaxLevel"));
@@ -346,14 +366,14 @@ public class MainFormController implements Initializable {
 
         // BLAST Hits detailed table
         detailTableId.prefWidthProperty().bind(tblBlastHit.widthProperty().multiply(0.1));
-        detailTableRankName.prefWidthProperty().bind(tblBlastHit.widthProperty().multiply(0.2));
+        detailTableGene.prefWidthProperty().bind(tblBlastHit.widthProperty().multiply(0.1));
+        detailTableRankName.prefWidthProperty().bind(tblBlastHit.widthProperty().multiply(0.1));
         detailTableTaxLevel.prefWidthProperty().bind(tblBlastHit.widthProperty().multiply(0.35));
         detailTableParentTaxLevel.prefWidthProperty().bind(tblBlastHit.widthProperty().multiply(0.35));
     }
 
     private void filterBlastHitsTable(ObservableList<BlastResult> masterData) {
 
-       
         // 1. Wrap the ObservableList in a FilteredList (initially display all data).
         FilteredList<BlastResult> filteredData = new FilteredList<>(masterData, p -> true);
 
@@ -370,6 +390,8 @@ public class MainFormController implements Initializable {
 
                 if (BlastResult.getDetailTableRankName().toLowerCase().contains(lowerCaseFilter)) {
                     return true; // Filter matches Rank Name.
+                } else if (BlastResult.getDetailTableGene().contains(lowerCaseFilter)) {
+                    return true; // Filter matches Taxonomy Level.
                 } else if (BlastResult.getDetailTableTaxLevel().toLowerCase().contains(lowerCaseFilter)) {
                     return true; // Filter matches Taxonomy Level.
                 } else if (BlastResult.getDetailTableParentTaxLevel().toLowerCase().contains(lowerCaseFilter)) {
@@ -419,32 +441,52 @@ public class MainFormController implements Initializable {
         // 5. Add sorted (and filtered) data to the table.
         tblOrphanGenes.setItems(sortedData);
     }
-    
-//      private void getBlastHitsBySelectedGene(ObservableList<BlastResult> masterData, String gene) {
-//
-//        // 1. Wrap the ObservableList in a FilteredList (initially display all data).
-//        FilteredList<BlastResult> filteredData = new FilteredList<>(masterData, p -> true);
-//
-//        // 2. Set the filter Predicate
-//        filteredData.setPredicate(BlastResult -> {
-//            // If filter text is empty, display all records.
-//            if (gene == null || gene.isEmpty()) {
-//                return true;
-//            }
-//
-//            if (BlastResult..contains(lowerCaseFilter)) {
-//                return true; // Filter matches Gene Level.
-//            }
-//            return false; // Does not match.
-//        });
-//
-//        // 3. Wrap the FilteredList in a SortedList. 
-//        SortedList<ORFGene> sortedData = new SortedList<>(filteredData);
-//
-//        // 4. Bind the SortedList comparator to the TableView comparator.
-//        sortedData.comparatorProperty().bind(tblOrphanGenes.comparatorProperty());
-//
-//        // 5. Add sorted (and filtered) data to the table.
-//        tblOrphanGenes.setItems(sortedData);
-//    }
+
+    private ObservableList<BlastResult> updateBlastHitsBySelectedGene(ObservableList<BlastResult> masterData, String gene) {
+
+        // 1. Wrap the ObservableList in a FilteredList (initially display all data).
+        FilteredList<BlastResult> filteredData = new FilteredList<>(masterData, p -> true);
+
+        // 2. Set the filter Predicate
+        filteredData.setPredicate(BlastResult -> {
+            // If filter text is empty, display all records.
+            if (gene == null || gene.isEmpty()) {
+                return true;
+            }
+
+            if (BlastResult.getDetailTableGene().contains(gene)) {
+                return true; // Filter matches Gene Level.
+            }
+            return false; // Does not match.
+        });
+
+        // 3. Wrap the FilteredList in a SortedList. 
+        SortedList<BlastResult> sortedData = new SortedList<>(filteredData);
+
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        sortedData.comparatorProperty().bind(tblBlastHit.comparatorProperty());
+
+        // 5. Add sorted (and filtered) data to the table.
+        tblBlastHit.setItems(sortedData);
+        
+         Map<String, Integer> summary = new HashMap<>();
+         XYChart.Series<String, Number> seriesBlastHit = new XYChart.Series<>();
+         
+        for (BlastResult blastResult : sortedData) {
+            if (summary.containsKey(blastResult.getDetailTableRankName())) {
+                    // increment cout by one
+                    summary.replace(blastResult.getDetailTableRankName(), summary.get(blastResult.getDetailTableRankName()) + 1);
+                } else { // if the key is not available, add it as a new record
+                    summary.put(blastResult.getDetailTableRankName(), 1);
+                }
+        }
+        
+        for (Map.Entry<String, Integer> row : summary.entrySet()) {
+                seriesBlastHit.getData().add(new XYChart.Data<String, Number>(row.getKey(), row.getValue()));
+            }
+        chartBlastHit.getData().clear();
+        chartBlastHit.getData().add(seriesBlastHit);
+        
+        return sortedData;
+    }
 }
