@@ -23,6 +23,15 @@ public class Report {
     private ObservableList<ORFanGeneOverview> ORFanGeneOverviewList = FXCollections.observableArrayList();
     private ObservableList<BlastResult> blastResultList = FXCollections.observableArrayList();
     private XYChart.Series<String, Number> seriesBlastHit;
+    private XYChart.Series<String, Number> seriesOverview;
+
+    public XYChart.Series<String, Number> getSeriesOverview() {
+        return seriesOverview;
+    }
+
+    public XYChart.Series<String, Number> getSeriesBlastHit() {
+        return seriesBlastHit;
+    }
 
     public ObservableList<ORFGene> getORFGeneList() {
         return ORFGeneList;
@@ -42,6 +51,7 @@ public class Report {
         // load settings from the settings config file
         Map<String, String> settings = Util.getSettings();
         Map<String, Integer> summary = new HashMap<>();
+        seriesOverview = new XYChart.Series<>();
         ORFGene record;
         int totalOphanGenes = 0;
 
@@ -92,6 +102,7 @@ public class Report {
 
                 // add each record(ophan gene level and the number of orphan genes) to the list
                 ORFanGeneOverviewList.add(new ORFanGeneOverview(row.getKey(), row.getValue()));
+                seriesOverview.getData().add(new XYChart.Data<String, Number>(row.getKey(), row.getValue()));
 
                 // calculate total number of ophan genes
                 totalOphanGenes += row.getValue();
@@ -105,14 +116,14 @@ public class Report {
 
         String rankName = "NA";
         int rankCount = 0;
-        
+
         seriesBlastHit = new XYChart.Series<>();
         seriesBlastHit.setName("Matching hits");
 
         //System.out.println("-----------------" + columns[1] + "------------------");
         for (int i = 2; i < columns.length; i++) {
             String column = columns[i];
-           // System.out.println(column);
+            // System.out.println(column);
             String rankCountRecord = column.split("[\\[\\]]")[1];
 
             if (rankCountRecord.split(",").length >= 2) {
@@ -120,18 +131,18 @@ public class Report {
                 rankCount = Integer.parseInt(rankCountRecord.split(",")[1]);
                 seriesBlastHit.getData().add(new XYChart.Data<String, Number>(rankName, rankCount));
             }
-            
+
             String taxonomyDetails = column.split("[\\[\\]]")[2];
             String[] taxList = taxonomyDetails.split(",");
             for (int j = 0; j < taxList.length; j++) {
                 String tax = taxList[j];
-               // System.out.println("Tax : " + tax);
-                
+                // System.out.println("Tax : " + tax);
+
                 if (tax.split("[\\(\\)]").length >= 2) {
                     String taxomomy = tax.split("[\\(\\)]")[0];
                     String parentTaxomomy = tax.split("[\\(\\)]")[1];
-                    this.blastResultList.add(new BlastResult(i-1, rankName, taxomomy, parentTaxomomy));
-                    
+                    this.blastResultList.add(new BlastResult(i - 1, rankName, taxomomy, parentTaxomomy));
+
                 }
             }
         }

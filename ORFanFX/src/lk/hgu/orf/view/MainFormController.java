@@ -162,32 +162,21 @@ public class MainFormController implements Initializable {
             transition = new HamburgerBackArrowBasicTransition(hamburgerSideMenu);
             transition.setRate(-1);
 
-            ChartData cd = new ChartData();
-
             // fill chart with data
-            chartOverview.getData().add(cd.getOverviewChartData());
-            chartBlastHit.getData().add(cd.getBlastChartData());
-
-            // file table with data
-//            initORFanGeneTable(td.getORFGeneData());
-//            initORFanGeneOverviewTable(td.getORFGeneOverviewData());
-//            initBlastResultsTable(td.getBlastResultsData());
-            
+            //ChartData cd = new ChartData();
+            //chartOverview.getData().add(cd.getOverviewChartData());
+            //chartBlastHit.getData().add(cd.getBlastChartData());
             // set width for tables
             initTableWidths();
 
-            // load species
+            // load species to the organism textbox(customized textbox)
             Data data = new Data();
-
-            // Custom Control
             autotxtOrganism = new AutoCompleteTextField();
             autotxtOrganism.setFocusColor(txtProteinSequence.getFocusColor());
             autotxtOrganism.setPromptText("Organism");
             autotxtOrganism.prefWidthProperty().bind(hboxtxtOganism.widthProperty().multiply(0.9));
             autotxtOrganism.setLabelFloat(true);
             autotxtOrganism.getEntries().addAll(data.getOranisms());
-
-            // final AutoFillTextBox box = new AutoFillTextBox(data.getOranisms());/
             hboxtxtOganism.getChildren().addAll(autotxtOrganism);
 
         } catch (IOException e) {
@@ -224,6 +213,7 @@ public class MainFormController implements Initializable {
 
     @FXML
     void txtProteinSequence_OnDragDragOver(DragEvent event) {
+        // enable file drag onto textbox
         if (event.getDragboard().hasFiles()) {
             event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         }
@@ -255,7 +245,6 @@ public class MainFormController implements Initializable {
 //        } else {
 //            System.err.println("Error: No organism selected!");
 //        }
-
         try {
 //            // Step 1 - Save input sequence as a fasta file
 //            txtStatusLabel.setText("Saving input sequence...");
@@ -286,24 +275,26 @@ public class MainFormController implements Initializable {
             initORFanGeneTable(report.getORFGeneList());
             initORFanGeneOverviewTable(report.getORFanGeneOverviewList());
             initBlastResultsTable(report.getBlastResultList());
-            
-            // Table filter 
-        tblOverview.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
-                //Check whether item is selected and set value of selected item to Label
-                if (tblOverview.getSelectionModel().getSelectedItem() != null) {
 
-                    ORFanGeneOverview record = tblOverview.getSelectionModel().getSelectedItem();
-                    System.out.println(record.getOverviewTaxonomyLevel());
-                    filterORFanGeneTable(report.getORFGeneList(), record.getOverviewTaxonomyLevel());
+            // Table filter 
+            tblOverview.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+                @Override
+                public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
+                    //Check whether item is selected and set value of selected item to Label
+                    if (tblOverview.getSelectionModel().getSelectedItem() != null) {
+                        ORFanGeneOverview record = tblOverview.getSelectionModel().getSelectedItem();
+                        System.out.println(record.getOverviewTaxonomyLevel());
+                        filterORFanGeneTable(report.getORFGeneList(), record.getOverviewTaxonomyLevel());
+                    }
                 }
-            }
-        });
-        
-        
-            initialiseBlastHitsTable(report.getBlastResultList());
-        
+            });
+
+            filterBlastHitsTable(report.getBlastResultList());
+
+            // fill chart with data
+            chartOverview.getData().add(report.getSeriesOverview());
+            chartBlastHit.getData().add(report.getSeriesBlastHit());
+
         } catch (IOException ex) {
             System.err.println("Error: " + ex.getMessage());
         }
@@ -315,7 +306,7 @@ public class MainFormController implements Initializable {
         GeneName.setCellValueFactory(new PropertyValueFactory<>("GeneName"));
         ORFanGeneLevel.setCellValueFactory(new PropertyValueFactory<>("ORFanGeneLevel"));
         TaxonomyLevel.setCellValueFactory(new PropertyValueFactory<>("TaxonomyLevel"));
-        
+
         tblOrphanGenes.setItems(data);
     }
 
@@ -360,9 +351,9 @@ public class MainFormController implements Initializable {
         detailTableParentTaxLevel.prefWidthProperty().bind(tblBlastHit.widthProperty().multiply(0.35));
     }
 
-    private void initialiseBlastHitsTable(ObservableList<BlastResult> masterData) {
-        
-        System.out.println("masterData " + masterData.size());
+    private void filterBlastHitsTable(ObservableList<BlastResult> masterData) {
+
+       
         // 1. Wrap the ObservableList in a FilteredList (initially display all data).
         FilteredList<BlastResult> filteredData = new FilteredList<>(masterData, p -> true);
 
@@ -394,33 +385,31 @@ public class MainFormController implements Initializable {
         // 4. Bind the SortedList comparator to the TableView comparator.
         sortedData.comparatorProperty().bind(tblBlastHit.comparatorProperty());
 
-        System.out.println("masterData before" + sortedData.size());
         // 5. Add sorted (and filtered) data to the table.
         tblBlastHit.setItems(sortedData);
     }
-    
+
     private void filterORFanGeneTable(ObservableList<ORFGene> masterData, String searchTerm) {
-    
-          // 1. Wrap the ObservableList in a FilteredList (initially display all data).
+
+        // 1. Wrap the ObservableList in a FilteredList (initially display all data).
         FilteredList<ORFGene> filteredData = new FilteredList<>(masterData, p -> true);
 
         // 2. Set the filter Predicate
-      
-            filteredData.setPredicate(ORFGene -> {
-                // If filter text is empty, display all records.
-                if (searchTerm == null || searchTerm.isEmpty() || "Total".equals(searchTerm)) {
-                    return true;
-                }
+        filteredData.setPredicate(ORFGene -> {
+            // If filter text is empty, display all records.
+            if (searchTerm == null || searchTerm.isEmpty() || "Total".equals(searchTerm)) {
+                return true;
+            }
 
-                // facilitate search for upper and lower cases.
-                String lowerCaseFilter = searchTerm.toLowerCase();
+            // facilitate search for upper and lower cases.
+            String lowerCaseFilter = searchTerm.toLowerCase();
 
-                if (ORFGene.getORFanGeneLevel().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filter matches Gene Level.
-                } 
-                return false; // Does not match.
-            });
-   
+            if (ORFGene.getORFanGeneLevel().toLowerCase().contains(lowerCaseFilter)) {
+                return true; // Filter matches Gene Level.
+            }
+            return false; // Does not match.
+        });
+
         // 3. Wrap the FilteredList in a SortedList. 
         SortedList<ORFGene> sortedData = new SortedList<>(filteredData);
 
@@ -430,5 +419,32 @@ public class MainFormController implements Initializable {
         // 5. Add sorted (and filtered) data to the table.
         tblOrphanGenes.setItems(sortedData);
     }
-
+    
+//      private void getBlastHitsBySelectedGene(ObservableList<BlastResult> masterData, String gene) {
+//
+//        // 1. Wrap the ObservableList in a FilteredList (initially display all data).
+//        FilteredList<BlastResult> filteredData = new FilteredList<>(masterData, p -> true);
+//
+//        // 2. Set the filter Predicate
+//        filteredData.setPredicate(BlastResult -> {
+//            // If filter text is empty, display all records.
+//            if (gene == null || gene.isEmpty()) {
+//                return true;
+//            }
+//
+//            if (BlastResult..contains(lowerCaseFilter)) {
+//                return true; // Filter matches Gene Level.
+//            }
+//            return false; // Does not match.
+//        });
+//
+//        // 3. Wrap the FilteredList in a SortedList. 
+//        SortedList<ORFGene> sortedData = new SortedList<>(filteredData);
+//
+//        // 4. Bind the SortedList comparator to the TableView comparator.
+//        sortedData.comparatorProperty().bind(tblOrphanGenes.comparatorProperty());
+//
+//        // 5. Add sorted (and filtered) data to the table.
+//        tblOrphanGenes.setItems(sortedData);
+//    }
 }
