@@ -21,7 +21,6 @@ public class ORFanFX extends Application {
        
         window.setScene(scene);
         window.setTitle("ORFan Finder");
-        scene.getStylesheets().add(getClass().getResource("css.css").toExternalForm());
         window.show();
     }
 

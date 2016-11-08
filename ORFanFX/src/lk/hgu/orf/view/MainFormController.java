@@ -250,11 +250,11 @@ public class MainFormController implements Initializable {
 
         progressBar.setVisible(true);
 
-        if (!autotxtOrganism.getText().equals("")) {
-            organismTaxonomyID = autotxtOrganism.getText().split("[\\(\\)]")[1];
-        } else {
-            System.err.println("Error: No organism selected!");
-        }
+//        if (!autotxtOrganism.getText().equals("")) {
+//            organismTaxonomyID = autotxtOrganism.getText().split("[\\(\\)]")[1];
+//        } else {
+//            System.err.println("Error: No organism selected!");
+//        }
 
         try {
 //            // Step 1 - Save input sequence as a fasta file
@@ -285,7 +285,7 @@ public class MainFormController implements Initializable {
             // update tables with results
             initORFanGeneTable(report.getORFGeneList());
             initORFanGeneOverviewTable(report.getORFanGeneOverviewList());
-            initialiseBlastHitsTable(report.getBlastResultList());
+            initBlastResultsTable(report.getBlastResultList());
             
             // Table filter 
         tblOverview.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
@@ -300,6 +300,9 @@ public class MainFormController implements Initializable {
                 }
             }
         });
+        
+        
+            initialiseBlastHitsTable(report.getBlastResultList());
         
         } catch (IOException ex) {
             System.err.println("Error: " + ex.getMessage());
