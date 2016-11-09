@@ -1,6 +1,9 @@
 package lk.hgu.orf.util;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -34,14 +37,15 @@ public class Util {
             settings.put("defalt_maxtargetseq", prop.getProperty("defalt_maxtargetseq"));
             settings.put("defalt_threads", prop.getProperty("defalt_threads"));
             settings.put("defalt_blastmethod", prop.getProperty("defalt_blastmethod"));
-            
+
             settings.put("blast", prop.getProperty("blast"));
             settings.put("outputFile", prop.getProperty("outputFile"));
             settings.put("outfmt", prop.getProperty("outfmt"));
-            
+
             settings.put("ORFanFinder", prop.getProperty("ORFanFinder"));
             settings.put("ORFan_outputfile", prop.getProperty("ORFan_outputfile"));
-            
+
+            settings.put("example_protseq", prop.getProperty("example_protseq"));
 
         } catch (IOException ex) {
             System.out.println(" IOError: " + ex.getMessage());
@@ -56,7 +60,20 @@ public class Util {
             }
         }
         return settings;
+    }
 
+    public static String getExampleProtSeq() throws FileNotFoundException, IOException {
+
+        String sequence = "";
+        Map<String, String> settings = Util.getSettings();
+
+        BufferedReader in = new BufferedReader(new FileReader(settings.get("example_protseq")));
+        String line = in.readLine();
+        while (line != null) {
+            sequence += line + "\n";
+            line = in.readLine();
+        }
+        return sequence;
     }
 
 }

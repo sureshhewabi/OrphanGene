@@ -8,7 +8,6 @@ import com.jfoenix.controls.JFXProgressBar;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -31,29 +30,26 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import lk.hgu.orf.control.Blast;
-import lk.hgu.orf.control.ORFan;
 import lk.hgu.orf.control.Preprocess;
 import lk.hgu.orf.control.Report;
 import lk.hgu.orf.model.BlastResult;
 import lk.hgu.orf.model.ORFGene;
 import lk.hgu.orf.model.ORFanGeneOverview;
-import lk.hgu.orf.test.ChartData;
 import lk.hgu.orf.test.Data;
 import lk.hgu.orf.test.TableData;
+import lk.hgu.orf.util.Util;
 
 /**
  *
@@ -122,6 +118,9 @@ public class MainFormController implements Initializable {
     private JFXTextArea txtProteinSequence;
 
     @FXML
+    private Hyperlink lblShowExample;
+
+    @FXML
     private JFXButton btnFindOrphanGenes;
 
     @FXML
@@ -161,6 +160,7 @@ public class MainFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         try {
             progressBar.setVisible(false);
 
@@ -169,10 +169,6 @@ public class MainFormController implements Initializable {
             transition = new HamburgerBackArrowBasicTransition(hamburgerSideMenu);
             transition.setRate(-1);
 
-            // fill chart with data
-            //ChartData cd = new ChartData();
-            //chartOverview.getData().add(cd.getOverviewChartData());
-            //chartBlastHit.getData().add(cd.getBlastChartData());
             // set width for tables
             initTableWidths();
 
@@ -438,7 +434,7 @@ public class MainFormController implements Initializable {
 
         // 4. Bind the SortedList comparator to the TableView comparator.
         sortedData.comparatorProperty().bind(tblOrphanGenes.comparatorProperty());
-        
+
         return sortedData;
     }
 
@@ -486,9 +482,21 @@ public class MainFormController implements Initializable {
         }
         chartBlastHit.getData().clear();
         chartBlastHit.getData().add(seriesBlastHit);
-        
+
         filterBlastHitsTable(sortedData);
 
         return sortedData;
+    }
+    
+      @FXML
+    void lblShowExample_clicked(ActionEvent event) {
+        
+        try {
+            txtProteinSequence.setText(Util.getExampleProtSeq());
+            autotxtOrganism.setText("Homo sapiens (9606)");
+        } catch (IOException ex) {
+            System.out.println("Error:" + ex.getMessage());
+        }
+
     }
 }
