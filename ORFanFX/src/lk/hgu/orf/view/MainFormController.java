@@ -8,6 +8,7 @@ import com.jfoenix.controls.JFXProgressBar;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -42,6 +43,8 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import lk.hgu.orf.control.Blast;
+import lk.hgu.orf.control.ORFan;
 import lk.hgu.orf.control.Preprocess;
 import lk.hgu.orf.control.Report;
 import lk.hgu.orf.model.BlastResult;
@@ -241,34 +244,31 @@ public class MainFormController implements Initializable {
         Preprocess prep = new Preprocess();
         String organismTaxonomyID = "";
 
-        progressBar.setVisible(true);
-
-//        if (!autotxtOrganism.getText().equals("")) {
-//            organismTaxonomyID = autotxtOrganism.getText().split("[\\(\\)]")[1];
-//        } else {
-//            System.err.println("Error: No organism selected!");
-//        }
+        if (!autotxtOrganism.getText().equals("")) {
+            organismTaxonomyID = autotxtOrganism.getText().split("[\\(\\)]")[1];
+        } else {
+            System.err.println("Error: No organism selected!");
+        }
         try {
-//            // Step 1 - Save input sequence as a fasta file
-//            txtStatusLabel.setText("Saving input sequence...");
-//            prep.saveInputSequence(txtProteinSequence.getText());
-//
-//            // Step 2 - create a ID file for indexing
-//            txtStatusLabel.setText("Creating ID file...");
-//            File inputFastaFile = new File("./workingdir/input.fasta");
-//            System.out.println("Input Sequence file : " + inputFastaFile.getAbsolutePath());
-//            prep.createIDFile(inputFastaFile.getAbsolutePath());
-//
-//            // Step 3 - BLAST
-//            txtStatusLabel.setText("Blasting ...");
-//            Blast blast = new Blast(inputFastaFile.getAbsolutePath(), "online");
-//            blast.doBlast();
-//            progressBar.setVisible(false);
-//
-//            // Step 4 - find Orphan Genes
-//            txtStatusLabel.setText("Finding orphan genes ...");
-//            ORFan orf = new ORFan(organismTaxonomyID);
-//            orf.findORFanGenes();
+            // Step 1 - Save input sequence as a fasta file
+            txtStatusLabel.setText("Saving input sequence...");
+            prep.saveInputSequence(txtProteinSequence.getText());
+
+            // Step 2 - create a ID file for indexing
+            txtStatusLabel.setText("Creating ID file...");
+            File inputFastaFile = new File("./workingdir/input.fasta");
+            System.out.println("Input Sequence file : " + inputFastaFile.getAbsolutePath());
+            prep.createIDFile(inputFastaFile.getAbsolutePath());
+
+            // Step 3 - BLAST
+            txtStatusLabel.setText("Blasting ...");
+            Blast blast = new Blast(inputFastaFile.getAbsolutePath(), "online");
+            blast.doBlast();
+
+            // Step 4 - find Orphan Genes
+            txtStatusLabel.setText("Finding orphan genes ...");
+            ORFan orf = new ORFan(organismTaxonomyID);
+            orf.findORFanGenes();
 
             // Step 5 - Report results
             report.readOutputFile();
@@ -310,7 +310,6 @@ public class MainFormController implements Initializable {
             // fill chart with data
             chartOverview.getData().add(report.getSeriesOverview());
 
-//            chartBlastHit.getData().add(cd.getBlastChartData());
         } catch (IOException ex) {
             System.err.println("Error: " + ex.getMessage());
         }

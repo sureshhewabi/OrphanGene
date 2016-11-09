@@ -17,23 +17,13 @@ public class ORFan {
     public ORFan(String organismTaxonomyID) {
         
          Map<String, String> settings = Util.getSettings();
-         
-//        command = settings.get("ORFanFinder") +
-//                " -query " + settings.get("outputFile") +
-//                " -id ./workingdir/IDFile.id" +
-//                " -nodes ./workingdir/nodes.txt" + 
-//                " -names ./workingdir/names.txt" + 
-//                " -db /Users/hgu/Documents/Tools/ORFanFinder/ORFanFinder-1.1.2/databases/nr.hdb" +
-//                " -tax 9606" + 
-//                " -threads " + settings.get("defalt_threads") +
-//                " -out ./workingdir/orfanResults.csv";
         
         command = settings.get("ORFanFinder") +
-                " -query ./workingdir/Ecoli.bl" +
-                " -id ./workingdir/Ecoli.id" +
+                " -query ./workingdir/blastResults.bl" +
+                " -id ./workingdir/IDFile.id" +
                 " -nodes ./workingdir/nodes.txt" + 
                 " -names ./workingdir/names.txt" + 
-                " -db /Users/hgu/Documents/Tools/ORFanFinder/ORFanFinder-1.1.2/databases/uniBacteria.hdb" +
+                " -db /Users/hgu/Documents/Tools/ORFanFinder/ORFanFinder-1.1.2/databases/nr.hdb" +
                 " -tax " + organismTaxonomyID +  
                 " -threads " + settings.get("defalt_threads") +
                 " -out " + settings.get("ORFan_outputfile");       
