@@ -15,6 +15,11 @@ import lk.hgu.orf.util.Util;
  */
 public class Data {
     
+    /*
+    * This function reads the entire NCBI species file (names.txt) and 
+    * extract only the species name and finally return a list of organisms
+    * available in the names.txt file
+    */
     public ObservableList<String> getOranisms() throws IOException{
     
          // load settings from the settings config file
@@ -29,6 +34,7 @@ public class Data {
             // read line by line
             while ((line = br.readLine()) != null) {
                 String[] columns = line.split("\t");
+                // add each orgamism to the collection
                 organisms.add(columns[1] + " (" + columns[0] + ")");
             }
          }

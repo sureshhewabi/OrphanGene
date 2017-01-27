@@ -44,10 +44,13 @@ public class Blast {
 
         Runtime rt = Runtime.getRuntime();
         try {
+            // print the blast command to the terminal
             System.out.println("BLAST Command: " + command);
+            //execute the blast command
             Process p = rt.exec(command);
-
+            // wait until the command get executed
             if (p.waitFor() != 0) {
+                // error occured
                 throw new RuntimeException("BLAST error occured");
             } else {
                 System.out.println("BLAST successfully Completed!!");

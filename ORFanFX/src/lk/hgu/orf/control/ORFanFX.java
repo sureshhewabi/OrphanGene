@@ -15,6 +15,7 @@ public class ORFanFX extends Application {
     
     @Override
     public void start(Stage window) throws Exception {
+        // locate the main form to start the application
         Parent root = FXMLLoader.load(getClass().getResource("/lk/hgu/orf/view/MainForm.fxml"));
     
         Scene scene = new Scene(root);

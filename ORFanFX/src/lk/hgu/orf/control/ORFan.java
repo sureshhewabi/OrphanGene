@@ -11,19 +11,20 @@ import lk.hgu.orf.util.Util;
  */
 public class ORFan {
     
-     // ORFan command
+     // ORFan command to be executed from command-line
     private String command = "";
 
     public ORFan(String organismTaxonomyID) {
         
          Map<String, String> settings = Util.getSettings();
         
+         // building the command by combining settings
         command = settings.get("ORFanFinder") +
                 " -query ./workingdir/blastResults.bl" +
                 " -id ./workingdir/IDFile.id" +
                 " -nodes ./workingdir/nodes.txt" + 
                 " -names ./workingdir/names.txt" + 
-                " -db /Users/hgu/Documents/Tools/ORFanFinder/ORFanFinder-1.1.2/databases/nr.hdb" +
+                " -db " + settings.get("defalt_database") +
                 " -tax " + organismTaxonomyID +  
                 " -threads " + settings.get("defalt_threads") +
                 " -out " + settings.get("ORFan_outputfile");       
@@ -34,8 +35,10 @@ public class ORFan {
          Runtime rt = Runtime.getRuntime();
         try {
             System.out.println("ORF Command: " + command);
+            // execute the command
             Process p = rt.exec(command);
 
+            // wait until command get executed
             if (p.waitFor() != 0) {
                 throw new RuntimeException("ORF error occured");
             } else {
