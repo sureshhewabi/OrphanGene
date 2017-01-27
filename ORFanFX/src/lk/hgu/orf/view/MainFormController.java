@@ -259,14 +259,16 @@ public class MainFormController implements Initializable {
             prep.createIDFile(inputFastaFile.getAbsolutePath());
 
             // Step 3 - BLAST
-            txtStatusLabel.setText("Blasting ...");
-            Blast blast = new Blast(inputFastaFile.getAbsolutePath(), "online");
-            blast.doBlast();
+            // NOTE: BLAST FUNCTIONALITY HAS TEMPORARY DISABLED, NEED TO IMPLEMENT THIS IN AWS NCBI BLAST SERVER
+//            txtStatusLabel.setText("Blasting ...");
+//            Blast blast = new Blast(inputFastaFile.getAbsolutePath(), "online");
+//            blast.doBlast();
 
             // Step 4 - find Orphan Genes
-            txtStatusLabel.setText("Finding orphan genes ...");
-            ORFan orf = new ORFan(organismTaxonomyID);
-            orf.findORFanGenes();
+            // NOTE: THIS STEP HAS TEMPORARY DISABLED FOR DEMOSTRATION PURPOSE
+//            txtStatusLabel.setText("Finding orphan genes ...");
+//            ORFan orf = new ORFan(organismTaxonomyID);
+//            orf.findORFanGenes();
 
             // Step 5 - Report results
             report.readOutputFile();
