@@ -14,7 +14,6 @@ import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -73,8 +72,8 @@ public class AutoCompleteTextField extends JFXTextField
   }
 
   /**
-   * Get the existing set of autocomplete entries.
-   * @return The existing autocomplete entries.
+   * Get the existing set of auto-complete entries.
+   * @return The existing auto-complete entries.
    */
   public SortedSet<String> getEntries() { return entries; }
 

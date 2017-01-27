@@ -4,8 +4,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import lk.hgu.orf.util.Util;
 import lk.hgu.orf.view.MainFormController;
 
 /**
@@ -14,15 +16,17 @@ import lk.hgu.orf.view.MainFormController;
  */
 public class Preprocess {
 
-    private final String extractIdsFromFasta = "/Users/hgu/NetBeansProjects/OrphanGene/ORFanFX/src/settings/scripts/extractIdsFromFasta";
+    private final String extractIdsFromFasta = "/Users/suresh/NetBeansProjects/OrphanGene/ORFanFX/src/settings/scripts/extractIdsFromFasta";
     private final String idFile = "IDFile.id";
 
     public void createIDFile(String inputFile) {
+        
+        Map<String, String> settings = Util.getSettings();
 
         try {
             String inputFileName = inputFile;
 
-            ProcessBuilder pb = new ProcessBuilder(extractIdsFromFasta, inputFileName, idFile);
+            ProcessBuilder pb = new ProcessBuilder(settings.get("extractIdsFromFasta"), inputFileName, settings.get("idFile"));
             Process p = pb.start();
             System.out.println("INFO: ID file created!!");
         } catch (IOException ex) {

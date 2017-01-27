@@ -23,7 +23,7 @@ public class Util {
         InputStream input = null;
 
         try {
-
+            // read data from settings file
             input = new FileInputStream("config.properties");
 
             // load the property file
@@ -33,20 +33,24 @@ public class Util {
             settings.put("defalt_database", prop.getProperty("defalt_database"));
             settings.put("defalt_species", prop.getProperty("defalt_species"));
             settings.put("defalt_taxonomy", prop.getProperty("defalt_taxonomy"));
+            settings.put("example_protseq", prop.getProperty("example_protseq"));
+            
+            // settings for preprocessing step
+            settings.put("extractIdsFromFasta", prop.getProperty("extractIdsFromFasta"));
+            settings.put("idFile", prop.getProperty("idFile"));
+            
+            // settings for BLAST step
             settings.put("defalt_maxevalue", prop.getProperty("defalt_maxevalue"));
             settings.put("defalt_maxtargetseq", prop.getProperty("defalt_maxtargetseq"));
             settings.put("defalt_threads", prop.getProperty("defalt_threads"));
             settings.put("defalt_blastmethod", prop.getProperty("defalt_blastmethod"));
-
             settings.put("blast", prop.getProperty("blast"));
             settings.put("outputFile", prop.getProperty("outputFile"));
             settings.put("outfmt", prop.getProperty("outfmt"));
 
+            // settings for ORFanFinder step
             settings.put("ORFanFinder", prop.getProperty("ORFanFinder"));
             settings.put("ORFan_outputfile", prop.getProperty("ORFan_outputfile"));
-
-            settings.put("example_protseq", prop.getProperty("example_protseq"));
-
         } catch (IOException ex) {
             System.out.println(" IOError: " + ex.getMessage());
         } finally {
@@ -67,6 +71,7 @@ public class Util {
         String sequence = "";
         Map<String, String> settings = Util.getSettings();
 
+        // read the example FASTA file line by line
         BufferedReader in = new BufferedReader(new FileReader(settings.get("example_protseq")));
         String line = in.readLine();
         while (line != null) {
