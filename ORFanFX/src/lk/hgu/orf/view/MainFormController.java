@@ -1,6 +1,7 @@
 package lk.hgu.orf.view;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDrawer;
 
 import com.jfoenix.controls.JFXHamburger;
@@ -16,6 +17,8 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -150,6 +153,9 @@ public class MainFormController implements Initializable {
 
     @FXML
     private HBox hboxtxtOganism;
+    
+    @FXML
+    private JFXComboBox<String> txtTaxLevels;
 
     private VBox box;
     private HamburgerBackArrowBasicTransition transition;
@@ -158,10 +164,16 @@ public class MainFormController implements Initializable {
 
     // To load data into data tables
     TableData td = new TableData();
+    Data data;
+
+    @FXML
+    void autotxtOrganism_clicked(ActionEvent event) {
+        System.out.println("changed");
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         try {
             progressBar.setVisible(false);
 
@@ -174,7 +186,7 @@ public class MainFormController implements Initializable {
             initTableWidths();
 
             // load species to the organism textbox(customized textbox)
-            Data data = new Data();
+            data = new Data();
             autotxtOrganism = new AutoCompleteTextField();
             autotxtOrganism.setFocusColor(txtProteinSequence.getFocusColor());
             autotxtOrganism.setPromptText("Organism");
@@ -195,6 +207,15 @@ public class MainFormController implements Initializable {
                 btnFindOrphanGenes.setDisable(false);
             }
         });
+
+        autotxtOrganism.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.contains(")")) {
+                String organismTaxonomyID = autotxtOrganism.getText().split("[\\(\\)]")[1];
+                System.out.println("taxonomy ID: " + organismTaxonomyID);
+                txtTaxLevels.setItems(data.getTaxLevels(organismTaxonomyID));
+            }
+        });
+
         btnFindOrphanGenes.setDisable(true);
     }
 
@@ -241,9 +262,12 @@ public class MainFormController implements Initializable {
 
         Preprocess prep = new Preprocess();
         String organismTaxonomyID = "";
+        String organismName = "";
 
         if (!autotxtOrganism.getText().equals("")) {
             organismTaxonomyID = autotxtOrganism.getText().split("[\\(\\)]")[1];
+            organismName = autotxtOrganism.getText().split("[\\(\\)]")[0].trim();
+            System.out.println("Selected Organism:" + organismName);
         } else {
             System.err.println("Error: No organism selected!");
         }
@@ -259,16 +283,15 @@ public class MainFormController implements Initializable {
             prep.createIDFile(inputFastaFile.getAbsolutePath());
 
             // Step 3 - BLAST
-            // NOTE: BLAST FUNCTIONALITY HAS TEMPORARY DISABLED, NEED TO IMPLEMENT THIS IN AWS NCBI BLAST SERVER
-//            txtStatusLabel.setText("Blasting ...");
-//            Blast blast = new Blast(inputFastaFile.getAbsolutePath(), "online");
-//            blast.doBlast();
+            txtStatusLabel.setText("Blasting ...");
+            String taxlevel=txtTaxLevels.getValue();
+            Blast blast = new Blast(inputFastaFile.getAbsolutePath(), "online", organismName,taxlevel);
+            blast.doBlast();
 
             // Step 4 - find Orphan Genes
-            // NOTE: THIS STEP HAS TEMPORARY DISABLED FOR DEMOSTRATION PURPOSE
-//            txtStatusLabel.setText("Finding orphan genes ...");
-//            ORFan orf = new ORFan(organismTaxonomyID);
-//            orf.findORFanGenes();
+            txtStatusLabel.setText("Finding orphan genes ...");
+            ORFan orf = new ORFan(organismTaxonomyID);
+            orf.findORFanGenes();
 
             // Step 5 - Report results
             report.readOutputFile();
@@ -486,10 +509,10 @@ public class MainFormController implements Initializable {
 
         return sortedData;
     }
-    
-      @FXML
+
+    @FXML
     void lblShowExample_clicked(ActionEvent event) {
-        
+
         try {
             txtProteinSequence.setText(Util.getExampleProtSeq());
             autotxtOrganism.setText("Homo sapiens (9606)");

@@ -14,7 +14,7 @@ public class Blast {
     // Blast command
     private String command = "";
 
-    public Blast(String inputFastaFile, String blastMethod) {
+    public Blast(String inputFastaFile, String blastMethod, String organism,String taxLevel) {
         
         Map<String, String> settings = Util.getSettings();
         
@@ -27,7 +27,8 @@ public class Blast {
                 + " -max_target_seqs " + settings.get("defalt_maxtargetseq")
                 + " -evalue " + settings.get("defalt_maxevalue")
                 + " -out " + settings.get("outputFile")
-                + " -remote";
+                + " -remote"
+                + " -entrez_query \'"+ taxLevel+"[Organism]\'";
         }else{
             command = settings.get("blast")
                 + " -query " + inputFastaFile
@@ -36,7 +37,8 @@ public class Blast {
                 + " -max_target_seqs " + settings.get("defalt_maxtargetseq")
                 + " -evalue " + settings.get("defalt_maxevalue")
                 + " -out " + settings.get("outputFile")
-                + " -num_threads " + settings.get("defalt_threads");
+                + " -num_threads " + settings.get("defalt_threads")
+                + " -entrez_query "+ organism +"[Organism]";
         }
     }
 

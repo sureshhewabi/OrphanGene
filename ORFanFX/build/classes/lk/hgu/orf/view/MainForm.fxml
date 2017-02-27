@@ -109,7 +109,7 @@
                                                 </BorderPane>
                                                 <BorderPane GridPane.columnIndex="1">
                                                    <center>
-                                                      <JFXComboBox maxWidth="1.7976931348623157E308" promptText="Database" BorderPane.alignment="TOP_LEFT">
+                                                      <JFXComboBox fx:id="txtTaxLevels" maxWidth="1.7976931348623157E308" promptText="Select" BorderPane.alignment="TOP_LEFT">
                                                          <BorderPane.margin>
                                                             <Insets left="20.0" right="20.0" />
                                                          </BorderPane.margin>
