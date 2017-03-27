@@ -54,7 +54,9 @@ public class Report {
         ORFGene record;
         int totalOphanGenes = 0;
 
-        try (BufferedReader br = new BufferedReader(new FileReader(settings.get("ORFan_outputfile")))) {
+        try {
+
+            BufferedReader br = new BufferedReader(new FileReader(settings.get("ORFan_outputfile")));
 
             // variable hold to each line of the file
             String line;
@@ -66,23 +68,32 @@ public class Report {
                 // split line by tab to get each column of the raw
                 String[] columns = line.split("\t");
 
-                // System.out.println("Gene ID:" + columns[0]);
                 // first column contains the Gene ID
                 String geneID = columns[0];
+//                System.out.println("Gene ID : " + geneID);
 
-                //System.out.println("columns[1]:" + columns[1]);
+//                System.out.println("columns[1]:" + columns[1]);
                 if (columns[1].contains("-")) {
                     // split second column to get ORF Gene Level and the Taxonomy Level
                     secondColumn = columns[1].split(" - ");
                     extractBlastHits(columns);
-                } else { // strict ORFan does not have taxonomy or any other details
+                } else if(columns[1].contains("native gene")){
+                    // split second column to get ORF Gene Level and the Taxonomy Level
+                    secondColumn = new String[]{columns[1], ""};
+                    extractBlastHits(columns);
+                }else { // strict ORFan does not have taxonomy or any other details
                     secondColumn = new String[]{columns[1], ""};
                 }
+                 System.out.println("going to copy data to record object");
+                 System.out.println("Gene ID: " +geneID);
+                 System.out.println("Tax: " +secondColumn[0]);
+                 System.out.println("Parent: " +secondColumn[1]);
 
                 // copy all the data to the ORFGene object
                 record = new ORFGene(geneID, "Not Available", secondColumn[0], secondColumn[1]);
 
                 ORFGeneList.add(record);
+//                  System.out.println(" ORFGeneList created!");
 
                 // Calculate group sum for the summary table
                 // if the key is already added
@@ -93,6 +104,7 @@ public class Report {
                     summary.put(record.getORFanGeneLevel(), 1);
                 }
             }
+//            System.out.println(" Summary calcutated!");
 
             // copy summary data to the summary object
             for (Map.Entry<String, Integer> row : summary.entrySet()) {
@@ -108,6 +120,8 @@ public class Report {
             }
             // add total line as the last record
             ORFanGeneOverviewList.add(new ORFanGeneOverview("Total", totalOphanGenes));
+        } catch (Exception ex) {
+            System.err.println(" Report Reading Error:" + ex.getMessage());
         }
     }
 
@@ -119,29 +133,41 @@ public class Report {
         seriesBlastHit = new XYChart.Series<>();
         seriesBlastHit.setName("Matching hits");
 
-        //System.out.println("-----------------" + columns[1] + "------------------");
-        for (int i = 2; i < columns.length; i++) {
-            String column = columns[i];
-            // System.out.println(column);
-            String rankCountRecord = column.split("[\\[\\]]")[1];
+        try {
 
-            if (rankCountRecord.split(",").length >= 2) {
-                rankName = rankCountRecord.split(",")[0];
-                rankCount = Integer.parseInt(rankCountRecord.split(",")[1]);
-                seriesBlastHit.getData().add(new XYChart.Data<String, Number>(rankName, rankCount));
-            }
+//            System.out.println("-----------------" + columns[1] + "------------------");
+            for (int i = 2; i < columns.length; i++) {
+                String column = columns[i];
+//                System.out.println("column:" + column);
+                String rankCountRecord = column.split("[\\[\\]]")[1];
+//                System.out.println("rankCountRecord:" + rankCountRecord);
 
-            String taxonomyDetails = column.split("[\\[\\]]")[2];
-            String[] taxList = taxonomyDetails.split(",");
-            for (int j = 0; j < taxList.length; j++) {
-                String tax = taxList[j];
+                if (rankCountRecord.split(",").length >= 2) {
+                    rankName = rankCountRecord.split(",")[0];
+                    rankCount = Integer.parseInt(rankCountRecord.split(",")[1]);
+//                    System.out.println("rank and count:" + rankName + "->" + rankCount);
+                    seriesBlastHit.getData().add(new XYChart.Data<String, Number>(rankName, rankCount));
+                }
 
-                if (tax.split("[\\(\\)]").length >= 2) {
-                    String taxomomy = tax.split("[\\(\\)]")[0];
-                    String parentTaxomomy = tax.split("[\\(\\)]")[1];
-                    this.blastResultList.add(new BlastResult(i - 1, columns[0],rankName, taxomomy, parentTaxomomy));
+                if (rankCount != 0) {
+                    String taxonomyDetails = column.split("[\\[\\]]")[2];
+//                    System.out.println("taxonomyDetails:"+ taxonomyDetails);
+                    String[] taxList = taxonomyDetails.split(",");
+                    for (int j = 0; j < taxList.length; j++) {
+                        String tax = taxList[j];
+//                        System.out.println("tax:"+ tax);
+                        if (tax.split("[\\(\\)]").length >= 2) {
+                            String taxomomy = tax.split("[\\(\\)]")[0];
+//                            System.out.println("taxonomy: " + taxomomy);
+                            String parentTaxomomy = tax.split("[\\(\\)]")[1];
+//                            System.out.println("parentTaxomomy: " + parentTaxomomy);
+                            this.blastResultList.add(new BlastResult(i - 1, columns[0], rankName, taxomomy, parentTaxomomy));
+                        }
+                    }
                 }
             }
+        } catch (Exception e) {
+            System.err.println("Blast data exraction error:" + e.getMessage());
         }
     }
 }

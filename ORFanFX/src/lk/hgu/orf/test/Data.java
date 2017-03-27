@@ -5,9 +5,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,7 +33,6 @@ public class Data {
          // load settings from the settings config file
         Map<String, String> settings = Util.getSettings();
         ObservableList<String> organisms = FXCollections.observableArrayList();
-        
         
          try (BufferedReader br = new BufferedReader(new FileReader(settings.get("defalt_species")))) {
 
@@ -68,9 +65,6 @@ public class Data {
                 String[] columns = line.split("\t");
                 // add each level and the parent level to the collection
                 taxonomyNodeTable.put(columns[0], columns[1]);
-//                if(columns[0].equals(selectedOrganismTaxID)){
-//                    break;
-//                }
             }
          }
     }
@@ -89,7 +83,7 @@ public class Data {
 
     private String findParent(String organismTaxId) {
         taxLevels.add(speciesTable.get(organismTaxId));
-        System.out.println("findParent ---> organismTaxId:"+organismTaxId+ speciesTable.get(organismTaxId));
+       // System.out.println("findParent ---> organismTaxId:"+organismTaxId+ speciesTable.get(organismTaxId));
         if (taxonomyNodeTable.get(organismTaxId).equals("1")) {
             return "";
         } else {

@@ -17,8 +17,6 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -175,6 +173,10 @@ public class MainFormController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         try {
+            // generate json files
+//            Util util = new Util();
+//            util.getOranisms();
+//            
             progressBar.setVisible(false);
 
             // Initialise side menu
@@ -278,7 +280,7 @@ public class MainFormController implements Initializable {
 
             // Step 2 - create a ID file for indexing
             txtStatusLabel.setText("Creating ID file...");
-            File inputFastaFile = new File("./workingdir/input.fasta");
+            File inputFastaFile = new File("workingdir/input.fasta");
             System.out.println("Input Sequence file : " + inputFastaFile.getAbsolutePath());
             prep.createIDFile(inputFastaFile.getAbsolutePath());
 
