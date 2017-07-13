@@ -6,20 +6,10 @@ import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.ResourceBundle;
-import java.util.Scanner;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -136,24 +126,6 @@ public class SettingsOverviewController implements Initializable {
         return selectedFile.getPath();
     }
 
-//    private void LoadSpecies() {
-//
-//        List<String> speciesList = new ArrayList<String>();
-//
-//        try {
-//            Scanner sc = new Scanner(new FileReader("/Users/hgu/NetBeansProjects/OrphanGene/ORFanFX/src/settings/names.txt"));
-//            while (sc.hasNextLine()) {
-//                speciesList.add(sc.next());
-//                System.out.println(sc.next());
-//            }
-//            System.out.println("speciesList length : " + speciesList.size());
-//            ObservableList<String> items = FXCollections.observableArrayList(speciesList);
-//            txtSettingSpeciesFrom.setItems(items);
-//        } catch (IOException e) {
-//            System.err.println("Setting loading  file error:" + e.getMessage());
-//        }
-//    }
-
     private void loadProperties() {
 
         Map<String, String> settings = new HashMap<>();
@@ -162,8 +134,8 @@ public class SettingsOverviewController implements Initializable {
 
         // Set property values to relevant fields
         txtDatabaseFile.setText(settings.get("defalt_database"));
-        txtSpeciesFile.setText(settings.get("defalt_species"));
-        txtTaxonomyFile.setText(settings.get("defalt_taxonomy"));
+        txtSpeciesFile.setText(settings.get("workingdir")+"names.txt");
+        txtTaxonomyFile.setText(settings.get("workingdir")+"nodes.txt");
         txtMaxEValue.setText(settings.get("defalt_maxevalue"));
         txtMaxTargetSeq.setText(settings.get("defalt_maxtargetseq"));
         sliderThreads.setValue(Double.parseDouble(settings.get("defalt_threads")));

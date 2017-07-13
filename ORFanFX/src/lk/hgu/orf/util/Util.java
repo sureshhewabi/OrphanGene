@@ -105,29 +105,28 @@ public class Util {
         Map<String, String> settings = Util.getSettings();
         List<JSONObject> organisms = new ArrayList<>();
         
-         try (BufferedReader br = new BufferedReader(new FileReader(settings.get("defalt_species")))) {
+         try (BufferedReader br = new BufferedReader(new FileReader(settings.get("workingdir")+"names.txt"))) {
 
             // variable hold to each line of the file
             String line;
 
             // read line by line
             while ((line = br.readLine()) != null) {
+                
                 String[] columns = line.split("\t");
                 speciesTable.put(columns[0],columns[1]);
-                // add each orgamism to the collection
-               JSONObject obj = new JSONObject();
-                obj.put("SpeciesName",columns[1]);
-                obj.put("NCBITaxID",columns[0]);
-                JSONArray taxonomy = new JSONArray();
-                taxonomy = getTaxLevels(columns[0]);
-                if(taxonomy !=null){
-                    obj.put("Taxonomy", taxonomy);
+                if("511145".equals(columns[0])){
+                    // add each orgamism to the collection
+                   JSONObject obj = new JSONObject();
+                    obj.put("SpeciesName",columns[1]);
+                    obj.put("NCBITaxID",columns[0]);
+                    JSONArray taxonomy = new JSONArray();
+                    taxonomy = getTaxLevels(columns[0]);
+                    if(taxonomy !=null){
+                        obj.put("Taxonomy", taxonomy);
+                    }
+                    organisms.add(obj);
                 }
-                organisms.add(obj);
-                
-                if("9606".equals(columns[0]))
-                    break;
-                
             }
          }
          
@@ -145,7 +144,7 @@ public class Util {
           // load settings from the settings config file
         Map<String, String> settings = Util.getSettings();
         
-         try (BufferedReader br = new BufferedReader(new FileReader(settings.get("defalt_taxonomy")))) {
+         try (BufferedReader br = new BufferedReader(new FileReader(settings.get("workingdir")+"nodes.txt"))) {
 
             // variable hold to each line of the file
             String line;
@@ -176,7 +175,7 @@ public class Util {
        // System.out.println("findParent ---> organismTaxId:"+organismTaxId+ speciesTable.get(organismTaxId));
        // if (taxonomyNodeTable.get(organismTaxId).equals("1")) {
        if(organismTaxId.equals("1")){
-          System.out.println(taxLevels.toString());
+         // System.out.println(taxLevels.toString());
             return "";
         } else {
             return findParent(taxonomyNodeTable.get(organismTaxId));

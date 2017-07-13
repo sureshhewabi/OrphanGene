@@ -15,13 +15,12 @@ import lk.hgu.orf.util.Util;
 public class Blast {
 
     // Blast command
-    private String command = "";
-    List<String> commandnew;
+    List<String> command;
 
     public Blast(String inputFastaFile, String blastMethod, String organism,String taxLevel) {
         
         Map<String, String> settings = Util.getSettings();
-         commandnew=Arrays.asList(settings.get("blast"),
+         command=Arrays.asList(settings.get("blast"),
                 "-query",
                inputFastaFile,
                 "-db",
@@ -35,60 +34,19 @@ public class Blast {
                 "-out",
                 settings.get("workingdir") + "blastResults.bl",
                 "-remote");
-               // "-entrez_query",
-               // "organism[Organism]");
-         
-//         commandnew=Arrays.asList("/usr/local/ncbi/blast/bin/blastp",
-//                "-query",
-//                "/Users/suresh/NetBeansProjects/OrphanGene/ORFanFX/workingdir/input.fasta",
-//                "-db",
-//                "nr",
-//                "-outfmt",
-//                "6",
-//                "-max_target_seqs",
-//                "1000",
-//                "-evalue",
-//                "1e-3",
-//                "-out",
-//                "/Users/suresh/NetBeansProjects/OrphanGene/ORFanFX/workingdir/blastResults.bl",
-//                "-remote",
 //                "-entrez_query",
-//                "Mammalia[Organism]");
-        
-//        // construct command 
-//        if("online".equals(blastMethod)){
-//            command = settings.get("blast")
-//                + " -query " + inputFastaFile
-//                + " -db nr"
-//                + " -outfmt 6"
-//                + " -max_target_seqs " + settings.get("defalt_maxtargetseq")
-//                + " -evalue " + settings.get("defalt_maxevalue")
-//                + " -out " + settings.get("workingdir") + "blastResults.bl"
-//                + " -remote"
-//                + " -entrez_query '"+ taxLevel+"[Organism]'";
-//        }else{
-//            command = settings.get("blast")
-//                + " -query " + inputFastaFile
-//                + " -db " + settings.get("defalt_database")
-//                + " -outfmt 6"
-//                + " -max_target_seqs " + settings.get("defalt_maxtargetseq")
-//                + " -evalue " + settings.get("defalt_maxevalue")
-//                + " -out " + settings.get("outputFile")
-//                + " -num_threads " + settings.get("defalt_threads")
-//                + " -entrez_query "+ organism +"[Organism]";
-//        }
+//                organism+"[Organism]");
     }
 
     public void doBlast() {
         
-        //Runtime rt = Runtime.getRuntime();
         try {
             // print the blast command to the terminal
-            System.out.println("BLAST Command: " + commandnew.toString());
+            System.out.println("BLAST Command: " + command.toString());
+            System.out.println("Be patient...This will take 2-15 min...");
             
             //execute the blast command
-             ProcessBuilder pb = new ProcessBuilder(commandnew);
-            //Process p = rt.exec(command);
+             ProcessBuilder pb = new ProcessBuilder(command);
              Process p = pb.start();
     
             // wait until the command get executed
@@ -98,7 +56,7 @@ public class Blast {
             } else {
                 System.out.println("BLAST successfully Completed!!");
             }
-            System.out.println("process exit value:"+ p.exitValue());
+             System.out.println((p.exitValue() == 0) ? "Blast ran Successfully":"Blast Failed with " + p.exitValue() + " value");
         } catch (IOException ex) {
             System.err.println("IOError: " + ex.getMessage());
         } catch (InterruptedException ex) {

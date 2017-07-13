@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="ORFanFX.jar" size="15628501" download="eager" />
+    <jar href="ORFanFX.jar" size="15628844" download="eager" />
     <jar href="lib/jfoenix.jar" size="2178891" download="eager" />
     <jar href="lib/json-simple-1.1.1.jar" size="23737" download="eager" />
   </resources>

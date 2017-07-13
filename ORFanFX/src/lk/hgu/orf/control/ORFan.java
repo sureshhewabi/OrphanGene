@@ -14,25 +14,14 @@ import lk.hgu.orf.util.Util;
 public class ORFan {
     
      // ORFan command to be executed from command-line
-    private String command = "";
-    List<String> commandnew;
+    List<String> command;
 
     public ORFan(String organismTaxonomyID) {
         
          Map<String, String> settings = Util.getSettings();
         
          // building the command by combining settings
-//        command = settings.get("ORFanFinder") +
-//                " -query "+ settings.get("workingdir")+"blastResults.bl" +
-//                " -id "+ settings.get("workingdir")+"IDFile.id" +
-//                " -nodes "+ settings.get("workingdir")+"nodes.txt" + 
-//                " -names "+ settings.get("workingdir")+"names.txt" + 
-//                " -db " + settings.get("defalt_database") +
-//                " -tax " + organismTaxonomyID +  
-//                " -threads " + settings.get("defalt_threads") +
-//                " -out " + settings.get("workingdir")+"orfanResults.csv";    
-        
-         commandnew=Arrays.asList(settings.get("ORFanFinder"),
+     command = Arrays.asList(settings.get("ORFanFinder"),
                  "-query",
                  settings.get("workingdir")+"blastResults.bl",
                  "-id",
@@ -55,12 +44,12 @@ public class ORFan {
     
     public void findORFanGenes(){
         
-//         Runtime rt = Runtime.getRuntime();
         try {
-            System.out.println("ORF Command: " + commandnew.toString());
+            System.out.println("ORF Command: " + command.toString());
+            System.out.println("Be patient...This will take 2-15 min...");
+           
             // execute the command
-//            Process p = rt.exec(command);
-             ProcessBuilder pb = new ProcessBuilder(commandnew);
+             ProcessBuilder pb = new ProcessBuilder(command);
              Process p = pb.start();
 
             // wait until command get executed
@@ -69,6 +58,7 @@ public class ORFan {
             } else {
                 System.out.println("ORF successfully Completed!!");
             }
+            System.out.println((p.exitValue() == 0) ? "ORFanFinder ran Successfully":"ORFanFinder Failed with " + p.exitValue() + " value");
         } catch (IOException ex) {
             System.err.println("IOError: " + ex.getMessage());
         } catch (InterruptedException ex) {

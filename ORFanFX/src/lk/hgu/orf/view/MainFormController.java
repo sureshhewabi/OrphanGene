@@ -176,7 +176,7 @@ public class MainFormController implements Initializable {
             // generate json files
 //            Util util = new Util();
 //            util.getOranisms();
-//            
+            
             progressBar.setVisible(false);
 
             // Initialise side menu
@@ -517,7 +517,9 @@ public class MainFormController implements Initializable {
 
         try {
             txtProteinSequence.setText(Util.getExampleProtSeq());
-            autotxtOrganism.setText("Homo sapiens (9606)");
+            autotxtOrganism.setText("Escherichia coli str. K-12 substr. MG1655 (511145)");
+            
+            
         } catch (IOException ex) {
             System.out.println("Error:" + ex.getMessage());
         }
